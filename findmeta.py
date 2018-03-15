@@ -22,12 +22,11 @@ def getTracks(item_type="tracks", info_dict=None, search_string=None):
             total_tracks = items[i]["tracks"]["total"]
             playlist_id = items[i]["id"]
             owner_id = items[i]["owner"]["id"]
-            playlists.append({"Item no.": i+1,
-                          "Playlist Name": playlist_name,
-                          "Owner Name": owner_name,
-                          "No. of tracks":total_tracks,
-                          "Playlist ID":playlist_id,
-                          "Owner ID":owner_id                  
+            playlists.append({"Playlist Name": playlist_name,
+                              "Owner Name": owner_name,
+                              "No. of tracks":total_tracks,
+                              "Playlist ID":playlist_id,
+                              "Owner ID":owner_id                  
             }) 
         return playlists
 
@@ -38,9 +37,8 @@ def getTracks(item_type="tracks", info_dict=None, search_string=None):
         for i in range( len(items) ):
             category_name = items[i]["name"]
             category_id = items[i]["id"]
-            categories.append({"Item no.":i+1,
-                              "Category Name":category_name,
-                              "Category Id:":category_id
+            categories.append({"Category Name":category_name,
+                               "Category Id:":category_id
             })
         return categories 
 
@@ -64,15 +62,14 @@ def getTracks(item_type="tracks", info_dict=None, search_string=None):
             track_name=items[i]["name"]
             track_id=items[i]["id"]
             track_popularity=items[i]["popularity"]
-            tracks.append({"Item no.":i+1,
-                          "Album Name":album_name,
-                          "Album Type":album_type,
-                          "Artist(s)":artists_names,
-                          "Track Name":track_name,
-                          "Popularity":track_popularity,
-                          "Track ID":track_id  
+            tracks.append({"Album Name":album_name,
+                           "Album Type":album_type,
+                           "Artist(s)":artists_names,
+                           "Track Name":track_name,
+                           "Popularity":track_popularity,
+                           "Track ID":track_id  
             })
-        tracks.sort(key=lambda d: d['Popularity'])
+        tracks.sort(key=lambda d: d['Popularity'], reverse=True)
         return tracks
 
 def getPlaylistTracks(user, playlist_id, limit=100):
@@ -86,15 +83,14 @@ def getPlaylistTracks(user, playlist_id, limit=100):
         track_name = items[i]["track"]["name"]
         popularity = items[i]["track"]["popularity"]
         track_id   = items[i]["track"]["id"]
-        tracks.append( {"Item no.":i+1,
-                     "Album Name":album_name,
-                     "Album Type":album_type,
-                     "Artist(s)":artists_names,
-                     "Track Name":track_name,
-                     "Popularity": popularity,
-                     "Track ID": track_id  
+        tracks.append( {"Album Name":album_name,
+                        "Album Type":album_type,
+                        "Artist(s)":artists_names,
+                        "Track Name":track_name,
+                        "Popularity": popularity,
+                        "Track ID": track_id  
         } )
-    tracks.sort(key=lambda d: d['Popularity'])
+    tracks.sort(key=lambda d: d['Popularity'], reverse=True)
     return tracks
 
 def getTrackInfo(track_id):
@@ -106,26 +102,41 @@ def getTrackInfo(track_id):
     album_release=items["album"]["release_date"]
     album_track_number=items["track_number"]
     track_duration=items["duration_ms"]
-    track = []
-    track.append({"Name Of Song": name,
+    track = {"Name Of Song": name,
                 "Artists Name(s)": artists_names,
                 "Album Type": album_type,
                 "Album Name": album_name,
-                "Album Release": album_release
+                "Album Release": album_release,
                 "Track Number": album_track_number,
                 "Track Duration (ms)": track_duration
-    })
+    }
     return track
      
-def printDictionary(d): # Prints dictionaries in list and seperate dictionaries too
-    if type(d) is list:
-        for item in d:
-            for key, value in item:
-                print("{0}: {1}\n".format(key, value))
-
+def printDictionary(d, start_pos=0, end_pos=2): # Prints dictionaries in list and seperate dictionaries too
+    if type(d) is list:              # end_pos will also act as limit for no. of results
+        print("\n"+"_"*37 + "BEGIN" + "_"*37 + "\n")
+        for i in range(start_pos, end_pos+1):
+            if i == len(d):
+                break
+            if len(d) != 1: # Skip the item number when only one track is present
+                print("Item no.: {}".format(i+1))
+            for key, value in d[i].items():
+                print("{0}: {1}".format(key, value))
+            print()
+        
+        if i == len(d):
+            print("_"*38 + "END" + "_"*38 + "\n")
+            return
+        inner_choice = input("Want more results? (y/n): ")
+        if inner_choice.lower() in ['y', 'yes']:
+            printDictionary(d, start_pos=end_pos+1, end_pos=end_pos+5)
+        
     elif type(d) is dict:
-        for key, value in d:
-            print("{0}: {1}\n".format(key, value))
+        print()
+        for key, value in d.items():
+            print("{0}: {1}".format(key, value))
+        print()
+
         
 if __name__ == "__main__":
     
@@ -138,25 +149,25 @@ if __name__ == "__main__":
                        "5) Get Track Info\n"
                        "6) Exit\n"
                  ))
+        print()
         if choice == 1:
             search_string = input('Enter the name of the track you want to search: ')
             tracks = getTracks(search_string=search_string)
-            printDictionary(tracks)
-
+            printDictionary(tracks) # List top 3 songs that matched
 
         elif choice == 2:
             categories = getTracks(item_type="categories")
-            printDictionary(categories)
+            printDictionary(categories, end_pos=5) # Lists 5 categories
 
         elif choice == 3:
             playlists = getTracks(item_type="playlists", search_string=input("Enter the category id: "))
-            printDictionary(playlists)
+            printDictionary(playlists, end_pos=5)
 
         elif choice == 4:
             owner = input("Enter the playlist owner: ")
             playlist_id = input("Enter the playlist id: ")
             tracks = getPlaylistTracks(owner, playlist_id, limit=25)
-            printDictionary(tracks)
+            printDictionary(tracks, end_pos=5)
 
         elif choice == 5:
             track_id = input("Enter the Track ID: ")
@@ -165,4 +176,3 @@ if __name__ == "__main__":
 
         else:
             exit(0)
-

@@ -1,3 +1,4 @@
 authorize.py
 venv/
 __pycache__/
+*.pyc

@@ -38,7 +38,7 @@ def getTracks(item_type="tracks", info_dict=None, search_string=None):
             category_name = items[i]["name"]
             category_id = items[i]["id"]
             categories.append({"Category Name":category_name,
-                               "Category Id:":category_id
+                               "Category ID":category_id
             })
         return categories 
 
@@ -154,11 +154,15 @@ if __name__ == "__main__":
             search_string = input('Enter the name of the track you want to search: ')
             tracks = getTracks(search_string=search_string)
             printDictionary(tracks) # List top 3 songs that matched
+            inner_choice = input("Do you want details on a track? (y/n) ")
+            if inner_choice.lower() in ['y', 'yes']:
+                item_no = int(input("Enter Item no. of the track you want details: "))
+                printDictionary(getTrackInfo(tracks[item_no-1]["Track ID"]))
 
         elif choice == 2:
             categories = getTracks(item_type="categories")
             printDictionary(categories, end_pos=5) # Lists 5 categories
-
+            
         elif choice == 3:
             playlists = getTracks(item_type="playlists", search_string=input("Enter the category id: "))
             printDictionary(playlists, end_pos=5)

@@ -1,3 +1,7 @@
 import sys, os
 
-sys.path.insert(0, os.path.abspath('..'))
+current_dir = os.getcwd().split('/')
+if 'tests' in current_dir:
+    current_dir.pop()
+parent_dir = '/'.join(current_dir)
+sys.path.insert(0, parent_dir)

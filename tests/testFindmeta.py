@@ -5,22 +5,22 @@ import findmeta
 class testFindmetaMethods(unittest.TestCase):
 
 	def test_getTracks(self):
-		tracks = findmeta.getTracks(item_type="tracks", search_string="See You Again")
+		tracks = findmeta.getTracks(search_string="See You Again")
 		for track in tracks:
 			if track["Track Name"] == "See You Again (feat. Charlie Puth)":
 				self.assertEqual(track["Artist(s)"], "Wiz Khalifa, Charlie Puth")
 				break
 
-	def test_getTracks_categories(self):
-		categories = findmeta.getTracks(item_type='categories')
+	def test_getCategories(self):
+		categories = findmeta.getCategories()
 		for category in categories:
 			if category["Category Name"] == "Top Lists":
 				assert True
 				break
 
 
-	def test_getTracks_playlists(self):
-		playlists = findmeta.getTracks(item_type="playlists", search_string="toplists")
+	def test_getPlaylists(self):
+		playlists = findmeta.getPlaylists(search_string="toplists")
 		for playlist in playlists:
 			if playlist["Playlist Name"] == "Today's Top Hits":
 				assert True

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "154d2ba0a38da46300bdfbf8ab73f6187f9d71cbaeb03e53a7443c8ac5f4b43a"
+            "sha256": "dc46f65ed3a4553bec8a88c7f3f58a17e52d27827616413f9581f4731bf405fc"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,15 @@
             ],
             "version": "==3.0.4"
         },
+        "eyed3": {
+            "hashes": [
+                "sha256:0789781867edbf342b489e37c458c97c243366e5310bcfe7ebc3e3b1c0256769",
+                "sha256:9a8f334c640813647062aaa46c52d65641bec6f7d7e73e51441c95d3d93c3f43",
+                "sha256:ef52940058602a856f4358b1fe02eda145c918ef28d49678ea3127992bc8f7ed"
+            ],
+            "index": "pypi",
+            "version": "==0.8.4"
+        },
         "idna": {
             "hashes": [
                 "sha256:2c6a5de3089009e3da7c5dde64a141dbc8551d5b7f6cf4ed7c2568d0cc520a8f",
@@ -37,12 +46,32 @@
             ],
             "version": "==2.6"
         },
+        "pathlib": {
+            "hashes": [
+                "sha256:6940718dfc3eff4258203ad5021090933e5c04707d5ca8cc9e73c94a7894ea9f"
+            ],
+            "version": "==1.0.1"
+        },
+        "python-magic": {
+            "hashes": [
+                "sha256:f2674dcfad52ae6c49d4803fa027809540b130db1dec928cfbb9240316831375",
+                "sha256:f3765c0f582d2dfc72c15f3b5a82aecfae9498bd29ca840d72f37d7bd38bfcd5"
+            ],
+            "version": "==0.4.15"
+        },
         "requests": {
             "hashes": [
                 "sha256:6a1b267aa90cac58ac3a765d067950e7dbbf75b1da07e895d1f594193a40a38b",
                 "sha256:9c443e7324ba5b85070c4a818ade28bfabedf16ea10206da1132edaa6dda237e"
             ],
             "version": "==2.18.4"
+        },
+        "six": {
+            "hashes": [
+                "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+                "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
+            ],
+            "version": "==1.11.0"
         },
         "spotipy": {
             "hashes": [

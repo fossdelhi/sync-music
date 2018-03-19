@@ -101,14 +101,16 @@ def getPlaylistTracks(user, playlist_id, limit=100):
 def getTrackInfo(track_id):
     items = spotify.track(track_id)
     name=items["name"]
-    artists_names=", ".join( [items["artists"][x]["name"] for x in range(len(items["artists"]))] )
+    artists_names = ", ".join( [items["artists"][x]["name"] for x in range(len(items["artists"]))] )
+    album_artists = ", ".join( [items["album"]["artists"][x]["name"] for x in range(len(items["album"]["artists"] ))]) 
     album_type=items["album"]["album_type"]
     album_name=items["album"]["name"]
     album_release=items["album"]["release_date"]
     album_track_number=items["track_number"]
     track_duration=items["duration_ms"]
     track = {"Name Of Song": name,
-                "Artists Name(s)": artists_names,
+                "Artist(s)": artists_names,
+                "Album Artist(s)": album_artists,
                 "Album Type": album_type,
                 "Album Name": album_name,
                 "Album Release": album_release,

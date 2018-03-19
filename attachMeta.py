@@ -15,6 +15,19 @@ def splitByFirstOccurence(string, character):
     last_half = last_half.strip()
     return [first_half, last_half]
 
+def getSong(string):
+    feat = 'ft.'
+    if string.find(feat) != -1:
+        string = string[:string.find(feat)]
+    return string
+
+def getArtists(string):
+    artists = splitByFirstOccurence(string, '&') #Even if the character is not in string, a single element list would be returned
+    feat = 'ft.'
+    if string.find(feat) != -1:
+        artists.append(string[string.find(feat)+len(feat):].strip()) 
+    return artists
+    
 songPaths = []
 with open('index', 'r') as musicFile:
     for line in musicFile:
@@ -29,9 +42,11 @@ artist_and_songs = [splitByFirstOccurence(x, ' - ') for x in song_files]
 #        artist_and_songs[i][j] = artist_and_songs[i][j].strip()
 
 for i in range(len(artist_and_songs)):
-    song = artist_and_songs[i][-1]
-    artists = artist_and_songs[i][0]
-    artists = splitByFirstOccurence(artists, '&') #Even if the character is not in string, a single element list would be returned
+    song = getSong(artist_and_songs[i][-1])
+    artists = getArtists(artist_and_songs[i][0])
+    if getArtists(artist_and_songs[i][-1]):
+        artists.extend(getArtists(artist_and_songs[i][-1]))
+
     tracks = findmeta.getTracks(song)
     found = 0
     track_generator = (track for track in tracks if found!=1) # using generators just to accomodate found and for together
@@ -54,9 +69,10 @@ for i in range(len(artist_and_songs)):
         audio_file.tag.artist = song_data["Artist(s)"]
         audio_file.tag.album = song_data["Album Name"]
         audio_file.tag.album_artist = song_data["Album Artist(s)"]
-        audio_file.tag.title = song_data["Track Name"]
+        audio_file.tag.title = song_data["Name Of Song"]
         audio_file.tag.track_num = song_data["Track Number"]
-        audio_file.save()
+        audio_file.tag.save()
+        print('Saved the details for song: {}'.format(song))
     else:
         print('Details of song found are: ')
         findmeta.printDictionary(song_data)

@@ -1,3 +1,7 @@
 [ChangeLog]
 
 A file to keep a log of changes made in this project.
+
+[Unreleased]
+--------------------
+    * Added first version of python script to upload songs on dropbox

@@ -4,7 +4,7 @@ This is the changelog of the metadata manager. All notable changes will
 be documented in this file. 
 
 
-[1.0.0] - 2017-03-20
+[0.1.0] - 2017-03-20
 Added
 - Metadata fetching using spotify API
 - Metadata attaching using eyeD3 module
@@ -12,4 +12,4 @@ Added
 - Support for reading songs path from *index* file
 
 Removed
-- Printing functionality from metadata functions, now return only data
+- Printing functionality from metadata functions, they now return only data

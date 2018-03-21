@@ -4,6 +4,10 @@ A file to keep a log of changes made in this project.
 
 [Unreleased]
 --------------------
+    [19-03-2018]
     * Added first version of python script to upload songs on dropbox.
+    [20-03-2018]
     * Added initial version of sync-music.py.
     * Added shell script to fetch songs address.
+    [21-03-2018]
+    * Added setup.sh file, to setup a working copy of the application.

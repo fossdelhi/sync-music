@@ -1,5 +1,6 @@
 import findmeta
 import eyed3
+import requests
 
 DEBUG=0
 def splitByFirstOccurence(string, character):
@@ -40,7 +41,6 @@ artist_and_songs = [splitByFirstOccurence(x, ' - ') for x in song_files]
 #for i in range(len(artist_and_songs)):
 #    for j in range(len(artist_and_songs[i])):
 #        artist_and_songs[i][j] = artist_and_songs[i][j].strip()
-
 for i in range(len(artist_and_songs)):
     song = getSong(artist_and_songs[i][-1])
     artists = getArtists(artist_and_songs[i][0])
@@ -71,7 +71,15 @@ for i in range(len(artist_and_songs)):
         audio_file.tag.album_artist = song_data["Album Artist(s)"]
         audio_file.tag.title = song_data["Name Of Song"]
         audio_file.tag.track_num = song_data["Track Number"]
+        if song_data["Image Link"]:
+            req = requests.get(song_data["Image Link"])
+            audio_file.tag.images.set(3, req.content, 'jpg') #0 For other Image, 1 for Icon, 2 for Other Icon, 3 for front conver, 
+                                                                    #4 for Back cover
+        if song_data["Icon Link"]:
+            req = requests.get(song_data["Icon Link"])
+            audio_file.tag.images.set(1, req.content, 'jpg') 
         audio_file.tag.save()
+        
         print('Saved the details for song: {}'.format(song))
     else:
         print('Details of song found are: ')

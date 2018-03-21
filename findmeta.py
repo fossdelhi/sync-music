@@ -110,7 +110,7 @@ def getTrackInfo(track_id):
     track_duration=items["duration_ms"]
     images_link=items["album"]["images"]
     max_image_res = 0
-    max_icon_size = 64
+    max_icon_size = 0
     image_link = ""
     icon_link = ""
     for image in images_link:

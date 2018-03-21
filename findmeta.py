@@ -108,6 +108,14 @@ def getTrackInfo(track_id):
     album_release=items["album"]["release_date"]
     album_track_number=items["track_number"]
     track_duration=items["duration_ms"]
+    images_link=items["album"]["images"]
+    max_image_res = 0
+    image_link = ""
+    for image in images_link:
+        if image["height"]*image["width"] > max_image_res:
+            image_link = image["url"]
+            max_image_res = image["height"]*image["width"]
+            
     track = {"Name Of Song": name,
                 "Artist(s)": artists_names,
                 "Album Artist(s)": album_artists,
@@ -115,7 +123,8 @@ def getTrackInfo(track_id):
                 "Album Name": album_name,
                 "Album Release": album_release,
                 "Track Number": album_track_number,
-                "Track Duration (ms)": track_duration
+                "Track Duration (ms)": track_duration,
+                "Image Link": image_link
     }
     return track
      

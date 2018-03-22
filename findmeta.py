@@ -117,7 +117,7 @@ def getTrackInfo(track_id):
         if image["height"]*image["width"] > max_image_res:
             image_link = image["url"]
             max_image_res = image["height"]*image["width"]
-        if image["height"] in [32, 64]:
+        if image["height"] < 400:
             if image["height"] > max_icon_size:
                 max_icon_size = image["height"]
                 icon_link = image["url"]

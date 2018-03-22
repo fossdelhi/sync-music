@@ -16,7 +16,7 @@ $ cd sync-music
 $ bash setup.sh
 
 Generate your tokens from dropbox developers console and configure with this command:
-$ sync-music --config dropbox.key ""
+$ sync-music --config dropbox.key "API_token"
 
 Now sync-music is ready to sync your favorite songs.
 

@@ -1,4 +1,6 @@
 # sync-music
+[![Build Status](https://travis-ci.org/fossdelhi/sync-music.svg?branch=syncing)](https://travis-ci.org/fossdelhi/sync-music)
+
 A project, to ease backup, add metadata, and sync your music using cloud storage. :)
 
 This app is build up with Python [3.5, 3.6] and Shell [Bash: 4.3] Script.

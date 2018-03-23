@@ -3,5 +3,31 @@ language:
   - bash
 
 python:
-  - "3.5"
-  - "3.6"
+  - 3.5
+
+os:
+  - linux
+
+branches:
+  only:
+  - syncing
+
+install:
+  - sudo apt-get install shellcheck
+  - pip install flake8
+
+script:
+  - cd ~
+  - git clone -b syncing --single-branch https://github.com/fossdelhi/sync-music
+  - cd sync-music
+  - pip install -r requirements.txt
+
+  - sudo bash ./setup.sh
+  - flake8 ./src/*.py
+    #    Ignoring the warning (F401) - that is, importing "project" module and
+    #    not using its functions.
+    #    Because "project" was imported just to add the path of "sync-music.py"
+  - flake8 --ignore=F401 ./tests/test_*.py
+  - shellcheck ./src/generate_index.sh
+  - ./tests/test_index_generation.py
+  - ./tests/test_config.py

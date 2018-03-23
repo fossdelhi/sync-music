@@ -4,13 +4,13 @@ import unittest
 import sync_music
 import os
 
+
 class TestConfigFile(unittest.TestCase):
 
     """
     Following test cases run to test those functions which read and write data
     to config files like keys.json.
     """
-
 
     def test_create_config_file(self):
         """
@@ -24,7 +24,6 @@ class TestConfigFile(unittest.TestCase):
         except AttributeError:
             self.assertTrue(False)
 
-
     def test_invalid_field(self):
         """
         Case: when user give invalid field to configure.
@@ -35,7 +34,6 @@ class TestConfigFile(unittest.TestCase):
                 ('invalid_field', 'valid_value'), 'config_test.json'
             )
         )
-
 
     def test_file_not_found(self):
         """
@@ -50,7 +48,6 @@ class TestConfigFile(unittest.TestCase):
 
         self.assertFalse(sync_music.get_config('./invalid_dir'))
 
-
     def test_file_found_empty(self):
         """
         Case: when config file is found with empty values.
@@ -62,7 +59,6 @@ class TestConfigFile(unittest.TestCase):
         )
 
         self.assertFalse(sync_music.get_config('config_test.json'))
-
 
     def test_file_found(self):
         """
@@ -79,7 +75,6 @@ class TestConfigFile(unittest.TestCase):
         self.assertEqual(
             sync_music.get_config('config_test.json'), 'valid_value'
         )
-
 
     def test_remove_file(self):
         """

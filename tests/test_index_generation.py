@@ -14,8 +14,7 @@ class TestIndexGeneration(unittest.TestCase):
     An index of songs is generated if user gives valid directories.
     """
 
-
-    __user_home=os.path.expanduser('~')
+    __user_home = os.path.expanduser('~')
 
     def test_dir_found(self):
         """
@@ -26,16 +25,14 @@ class TestIndexGeneration(unittest.TestCase):
             sync_music.gen_index((os.getcwd(),))
         )
 
-
     def test_dir_not_exist(self):
         """
         Case: When any of the given directories doesn't exist.
         """
 
         self.assertFalse(
-            sync_music.gen_index((os.getcwd(),"./non_existing_dir1",))
+            sync_music.gen_index((os.getcwd(), "./non_existing_dir1",))
         )
-
 
     def test_dir_not_found(self):
         """
@@ -44,7 +41,6 @@ class TestIndexGeneration(unittest.TestCase):
         """
 
         self.assertFalse(sync_music.gen_index(('../../',)))
-
 
     def test_dir_not_given(self):
         """

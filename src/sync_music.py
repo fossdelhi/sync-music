@@ -3,6 +3,7 @@ import click
 import subprocess
 import os
 import json
+import dropbox
 
 
 def gen_index(dirs: tuple) -> bool:
@@ -28,10 +29,10 @@ def gen_index(dirs: tuple) -> bool:
     call_script = list(dirs)
     call_script.insert(0,script_path)
     # If call_script returns with exit status 1 for "directory not found".
-    if subprocess.call(call_script):
-        return False
-    else:
+    if subprocess.call(call_script) in (0,3):
         return True
+    else:
+        return False
 
 
 def update_config(config: tuple,
@@ -95,16 +96,85 @@ def get_config(user_file='~/.sync-music/config/keys.json'):
         return False
 
 
+def upload_dbx():
+    """
+    This function upload song, whose complete path is available in the file
+    "added.tmp".
+
+    Returns True: if songs get uploaded successfully.
+    Returns False: if uploading encounters any internet or Auth issues.
+    """
+
+    app_token = get_config()
+
+    # Checking if access token is not added
+    if app_token == False:
+        return False
+
+    # Creating a Dropbox object to make requests to the API.
+    dbx = dropbox.Dropbox(app_token)
+
+    # Checking token's validity.
+    try:
+        dbx.users_get_current_account()
+    except dropbox.exceptions.AuthError as err:
+        print("ERROR: Invalid access token. Please add correct API token.")
+        return False
+    except:
+        print("Unknown Error: Check your internet connection...")
+        return False
+
+    # added.tmp is the file having paths of newly added songs to be uploaded.
+    songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
+    Index_file = os.path.expanduser('~/.sync-music/tmpfiles/Index')
+
+    with open(songs_file, 'r') as f:
+        for song in f:
+            print(song)
+            song = song.rstrip('\n')
+            # to fetch just the song name from complete path.
+            song_name = song.split('/')
+            song_name = song_name[-1]
+            try:
+                with open(song, 'rb') as mp3file:
+                    dbx.files_upload(bytes(mp3file.read()), '/'+song_name)
+                with open(Index_file, 'a') as index:
+                    index.write(song)
+                    index.write('\n')
+            except dropbox.exceptions.AuthError as err:
+                print("ERROR: While uploading the song.")
+                return False
+            except:
+                print("Unknown Error: Check your internet connection and"
+                      " available memory space in dropbox...")
+                return False
+
+    return True
+
+
 @click.command()
 @click.argument('dirs', nargs=-1, required=False)
 @click.option('--config',  nargs=2, type=str,
               help="To set configurations e.i:\n"
               "--config dropbox.key <API_key>")
 def main(dirs, config):
+
     if config and update_config(config):
         print("Configured successfully.")
+
     elif dirs and gen_index(dirs):
-        print("Index generated successfully.")
+        ch = ''
+        while ch not in ['y', 'Y', 'n', 'N']:
+            ch = input("\nWould you like to upload these songs on"
+                       "dropbox (y/n)?: ")
+            if ch == 'y' or ch == 'Y':
+                if upload_dbx():
+                    print("\nSongs uploaded successfully.")
+                    exit(0)
+            elif ch == 'n' or ch == 'N':
+                exit(0)
+            else:
+                print("\nIncorrect input!")
     else:
         exit(1)
 

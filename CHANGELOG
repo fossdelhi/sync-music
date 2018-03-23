@@ -9,3 +9,4 @@ A file to keep a log of changes made in this project.
     * Added shell script to fetch songs address.
     * Added setup.sh file, to setup a working copy of the application.
     * Added feature of adding dropbox configuration (API token) through CLI.
+    * Integrated python script as a function to upload songs on dropbox.

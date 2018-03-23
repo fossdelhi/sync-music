@@ -21,7 +21,7 @@ class TestConfigFile(unittest.TestCase):
             with open('config_test.json', 'w'):
                 pass
             self.assertTrue(True)
-        except:
+        except AttributeError:
             self.assertTrue(False)
 
 
@@ -45,10 +45,10 @@ class TestConfigFile(unittest.TestCase):
 
         self.assertFalse(
             sync_music.update_config(
-                ('dropbox.key', 'valid_value'), 'invalid_dir')
+                ('dropbox.key', 'valid_value'), './invalid_dir')
         )
 
-        self.assertFalse(sync_music.get_config('invalid_dir'))
+        self.assertFalse(sync_music.get_config('./invalid_dir'))
 
 
     def test_file_found_empty(self):
@@ -89,7 +89,7 @@ class TestConfigFile(unittest.TestCase):
         try:
             os.remove('config_test.json')
             self.assertTrue(True)
-        except:
+        except AttributeError:
             self.assertTrue(False)
 
 

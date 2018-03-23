@@ -22,7 +22,7 @@ do
 done
 
 # Truncating index.tmp.
-> "$HOME"/.sync-music/tmpfiles/index.tmp
+: > "$HOME"/.sync-music/tmpfiles/index.tmp
 
 # Updating "index.tmp" having complete path of all the current songs.
 for i in "$@"

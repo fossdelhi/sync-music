@@ -4,9 +4,10 @@ import subprocess
 import os
 import json
 import dropbox
+import requests
 
 
-def gen_index(dirs: tuple) -> bool:
+def gen_index(dirs):
     """
     This function calls bash script to generates file "Index" having address of
     all the songs from the given directory needed to be sync.
@@ -35,8 +36,8 @@ def gen_index(dirs: tuple) -> bool:
         return False
 
 
-def update_config(config: tuple,
-                  user_file='~/.sync-music/config/keys.json') -> bool:
+def update_config(config,
+                  user_file='~/.sync-music/config/keys.json'):
     """
     This function updates user given congfigurations in keys.json. For
     example API key.
@@ -58,11 +59,11 @@ def update_config(config: tuple,
         user_file = os.path.expanduser(user_file)
         try:
             if not os.path.isfile(user_file):
-                raise FileNotFoundError
+                raise AttributeError
             with open(user_file, mode='w+') as f:
                 json.dump(dict({config}),f)
 
-        except FileNotFoundError:
+        except AttributeError:
             print("\nkeys.json is unavailable.")
             return False
         return True
@@ -83,6 +84,8 @@ def get_config(user_file='~/.sync-music/config/keys.json'):
 
     user_file = os.path.expanduser(user_file)
     try:
+        if os.path.isfile(user_file) is False:
+            raise AttributeError
         with open(user_file, mode='r') as f:
             keys = json.loads(f.read())
             if os.stat(user_file).st_size != 0 and keys['dropbox.key'] != '':
@@ -91,7 +94,7 @@ def get_config(user_file='~/.sync-music/config/keys.json'):
                 print("\nPlease config sync-music with dropbox API_token.\n"
                       "See: sync-music --help")
                 return False
-    except FileNotFoundError:
+    except AttributeError:
         print("\nkeys.json is unavailable.")
         return False
 
@@ -117,10 +120,10 @@ def upload_dbx():
     # Checking token's validity.
     try:
         dbx.users_get_current_account()
-    except dropbox.exceptions.AuthError as err:
+    except dropbox.exceptions.AuthError:
         print("ERROR: Invalid access token. Please add correct API token.")
         return False
-    except:
+    except requests.exceptions.ConnectionError:
         print("Unknown Error: Check your internet connection...")
         return False
 
@@ -141,10 +144,10 @@ def upload_dbx():
                 with open(Index_file, 'a') as index:
                     index.write(song)
                     index.write('\n')
-            except dropbox.exceptions.AuthError as err:
+            except dropbox.exceptions.AuthError:
                 print("ERROR: While uploading the song.")
                 return False
-            except:
+            except requests.exceptions.ConnectionError:
                 print("Unknown Error: Check your internet connection and"
                       " available memory space in dropbox...")
                 return False

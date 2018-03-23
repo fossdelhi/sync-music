@@ -27,10 +27,11 @@ class TestDropboxAPI(unittest.TestCase):
             try:
                 dbx.users_get_current_account()
                 self.assertTrue(True)
-            except dropbox.exceptions.AuthError as err:
+            except dropbox.exceptions.AuthError:
                 print("ERROR: Invalid access token."
                       "Please add correct API token.")
                 self.assertTrue(False)
+
 
 if __name__ == '__main__':
     unittest.main()

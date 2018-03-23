@@ -4,11 +4,14 @@ import unittest
 import sync_music
 import os
 
+
 class TestIndexGeneration(unittest.TestCase):
 
     """
-    Following test cases run when user invoke "sync-music <directory>", To test
-    if the application is giving correct messages for different cases.
+    Following test run to test multiple cases of user input, while giving
+    directories as arguments to this app for syncing.
+
+    An index of songs is generated if user gives valid directories.
     """
 
 
@@ -16,33 +19,40 @@ class TestIndexGeneration(unittest.TestCase):
 
     def test_dir_found(self):
         """
-        Case: When user gives perfect directory.
+        Case: When user gives a valid directory.
         """
 
-        # "tmpfiles" directory is created with setup.sh. So, passing it as a
-        # valid directory for this test case.
         self.assertTrue(
-            sync_music.gen_index((self.__user_home+'/.sync-music/tmpfiles/',))
+            sync_music.gen_index((os.getcwd(),))
         )
 
 
     def test_dir_not_exist(self):
         """
-        Case: When any of the given directory doesn't exist.
+        Case: When any of the given directories doesn't exist.
         """
 
         self.assertFalse(
-            sync_music.gen_index((self.__user_home+"/non_existing_dir1",))
+            sync_music.gen_index((os.getcwd(),"./non_existing_dir1",))
         )
 
 
     def test_dir_not_found(self):
         """
-        Case: When user gives combination of "../" and "dir".
-        e.i:  $ sync_music ../../dir and this app fails to find the directory.
+        Case: When user gives relative path to directories, and this app fails
+        to find them.
         """
 
         self.assertFalse(sync_music.gen_index(('../../',)))
+
+
+    def test_dir_not_given(self):
+        """
+        Case: When user doesn't give any directory.
+        """
+
+        self.assertFalse(sync_music.gen_index(('',)))
+
 
 if __name__ == '__main__':
     unittest.main()

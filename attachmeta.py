@@ -17,20 +17,36 @@ def splitByFirstOccurence(string, character):
     return [first_half, last_half]
 
 def getSongName(string):
-    feat = 'ft.'
-    if string.find(feat) != -1:
-        string = string[:string.find(feat)]
+    feat_words = ['ft.', 'feat.', 'by', 'featuring']
+    for feat in feat_words:        
+        if string.find(feat) != -1:
+            string = string[:string.find(feat)].strip()
     return string
 
 def getArtists(string, featuring=0):
-    if string.find('&'):
+    """
+        featuring argument is supplied seperately when we want to explicitly test it's presence
+        else the artist list is returned again and get's appended repeatedly. 
+        Even in song name if we want to test featuring artists name, the song name would be returned 
+        if no featuring artist is found. 
+    """  
+    artists = []
+    if string.find('&') != -1:
         artists = splitByFirstOccurence(string, '&') #Even if the character is not in string, a single element list would be returned
-    feat = 'ft.'
-    if string.find(feat) != -1:
-        artists.append(string[string.find(feat)+len(feat):].strip()) 
-    elif featuring:
+    found = 0        
+    feat_words = ['ft.', 'feat.', 'by', 'featuring']
+    for feat in feat_words:        
+        if string.find(feat) != -1:
+            artists.append(string[string.find(feat)+len(feat):].strip()) 
+            found = 1
+    for i in range(len(artists)):
+        for feat in feat_words:
+            if artists[i].find(feat) != -1:
+                artists[i] = artists[i][:artists[i].find(feat)].strip()
+    if featuring == 1 and found == 0:
         return None
-
+    if artists == []:
+        return [string]
     return artists
 
 def getData(song, artists):
@@ -50,15 +66,21 @@ def stripNumbersAtBeginning(string):
     #Stripping numbers in the beginning that might be added to serialize the collection.
     temporary_index = 0
     for character in string:
-        temporary_index += 1
         if not character.isdigit():
             break               # Now it points to the last non digit character
+        temporary_index += 1
     if character in ['.', ')']:
         temporary_index += 1   # Before incrementing it points to . or )             
     string = string[temporary_index:]
-    return string
+    return string.strip() 
 
 def getTheSong(artist_and_song):
+    """
+    Check for song names with the spotify database
+    if no match is found with artist and names combinations
+    return none
+    """
+    artist_and_song = splitByFirstOccurence(artist_and_song, ' - ')
     song = getSongName(artist_and_song[-1])
     artists = getArtists(artist_and_song[0])
     if getArtists(artist_and_song[-1], featuring=1): # Only checks if any featuring artist is provided
@@ -80,8 +102,6 @@ def getTheSong(artist_and_song):
         song_data = getData(song, artists)
 
     if song_data is None:
-        if DEBUG == 1:
-            print("Song: {}\nArtist: {}".format(song, artists))
         print("Can't find data for song: {}".format(song))
     
     return song_data
@@ -94,10 +114,10 @@ def setData(SONG_NAME_FILE = "index", DEBUG=0):
     
     song_files = [x.split('/')[-1] for x in songPaths]
     song_files = [x.strip('.mp3') for x in song_files]
-    artist_and_songs = [splitByFirstOccurence(x, ' - ') for x in song_files]
-
-    for i in range(len(artist_and_songs)):
-        song_data = getTheSong(artist_and_songs[i])
+    
+    for i in range(len(song_files)):
+        artist_and_song = song_files[i]
+        song_data = getTheSong(artist_and_song)
         if song_data is None:
             continue
         song_data = findmeta.getTrackInfo(song_data["Track ID"])
@@ -124,4 +144,4 @@ def setData(SONG_NAME_FILE = "index", DEBUG=0):
             findmeta.printDictionary(song_data)
 
 if __name__ == "__main__":
-    setData()
+    setData(DEBUG = 1)

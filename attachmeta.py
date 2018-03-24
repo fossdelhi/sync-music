@@ -61,7 +61,7 @@ def getData(song, artists):
                     song_data = track
                     found = 1
                     break
-        elif song.lower() == track['Track Name'].lower():
+        elif song.lower() == getSongName(track['Track Name']).lower():
             song_data = track
             found = 1
 
@@ -106,10 +106,12 @@ def getTheSong(artist_and_song):
         song = stripNumbersAtBeginning(song)
         song_data = getData(song, artists)
 
-    if song_data is None:###############
+    if song_data is None: # Find for exact name match if other things fail
         song_data = getData(song, None)
         if song_data is None:
             song_data = getData(getSongName(artist_and_song[-1]),None)
+
+
 
     if song_data is None:
         print("Can't find data for song: {}".format(song))
@@ -134,24 +136,31 @@ def setData(SONG_NAME_FILE = "index", DEBUG=0):
         
         if DEBUG != 1:
             audio_file = eyed3.load(songPaths[i])
-            audio_file.tag.artist = song_data["Artist(s)"]
-            audio_file.tag.album = song_data["Album Name"]
-            audio_file.tag.album_artist = song_data["Album Artist(s)"]
-            audio_file.tag.title = song_data["Name Of Song"]
-            audio_file.tag.track_num = song_data["Track Number"]
-            if song_data["Image Link"]:
-                req = requests.get(song_data["Image Link"])
-                audio_file.tag.images.set(3, req.content, 'jpg') #0 For other Image, 1 for Icon, 2 for Other Icon, 3 for front conver, 
-                                                                    #4 for Back cover
-            if song_data["Icon Link"]:
-                req = requests.get(song_data["Icon Link"])
-                audio_file.tag.images.set(1, req.content, 'jpg') 
-            audio_file.tag.save()
-            
-            print('Saved details for : {}'.format(song_data['Name Of Song']) )
+            if audio_file:
+                try:
+                    audio_file.tag.artist = song_data["Artist(s)"]
+                except AttributeError: # To add id3 tags if they aren't present
+                    audio_file.initTag()
+                    audio_file.tag.artist = song_data["Artist(s)"]
+                audio_file.tag.album = song_data["Album Name"]
+                audio_file.tag.album_artist = song_data["Album Artist(s)"]
+                audio_file.tag.title = song_data["Name Of Song"]
+                audio_file.tag.track_num = song_data["Track Number"]
+                if song_data["Image Link"]:
+                    req = requests.get(song_data["Image Link"])
+                    audio_file.tag.images.set(3, req.content, 'jpg') #0 For other Image, 1 for Icon, 2 for Other Icon, 3 for front conver, 
+                                                                   #4 for Back cover
+                if song_data["Icon Link"]:
+                    req = requests.get(song_data["Icon Link"])
+                    audio_file.tag.images.set(1, req.content, 'jpg') 
+                audio_file.tag.save()
+                
+                print('Saved details for : {}'.format(song_data['Name Of Song']) )
+            else:
+                print("{}\n Couldn't be found".format(song_files[i]))
         else:
             print('Details of song found are: ')
             findmeta.printDictionary(song_data)
 
 if __name__ == "__main__":
-    setData(DEBUG = 1)
+    setData()

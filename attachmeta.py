@@ -46,12 +46,28 @@ def getData(song, artists):
                 break
     return song_data
     
+def stripNumbersAtBeginning(string):
+    #Stripping numbers in the beginning that might be added to serialize the collection.
+    temporary_index = 0
+    for character in string:
+        temporary_index += 1
+        if not character.isdigit():
+            break               # Now it points to the last non digit character
+    if character in ['.', ')']:
+        temporary_index += 1   # Before incrementing it points to . or )             
+    string = string[temporary_index:]
+    return string
+
 def getTheSong(artist_and_song):
     song = getSongName(artist_and_song[-1])
     artists = getArtists(artist_and_song[0])
     if getArtists(artist_and_song[-1], featuring=1): # Only checks if any featuring artist is provided
         artists.extend(getArtists(artist_and_song[-1], featuring=1))
     song_data = getData(song, artists)
+    if song_data is None: # Strip numbers that might appear before artists name in beginning of filename
+        artists[0] = stripNumbersAtBeginning(artists[0]) 
+        song_data = getData(song, artists)
+
     if song_data is None:
         song = getSongName(artist_and_song[0])
         artists = getArtists(artist_and_song[-1])
@@ -59,16 +75,8 @@ def getTheSong(artist_and_song):
             artists.extend(getArtists(artist_and_song[0], featuring = 1))
         song_data = getData(song, artists)
     
-    if song_data is None:
-        #Stripping numbers in the beginning that might be added to serialize the collection.
-        temporary_index = 0
-        for character in song:
-            temporary_index += 1
-            if not character.isdigit():
-                break               # Now it points to the last non digit character
-        if character in ['.', ')']:
-            temporary_index += 1   # Before incrementing it points to . or )             
-        song = song[temporary_index:]
+    if song_data is None: # For song names like "12. See you again.mp3"
+        song = stripNumbersAtBeginning(song)
         song_data = getData(song, artists)
 
     if song_data is None:
@@ -116,4 +124,4 @@ def setData(SONG_NAME_FILE = "index", DEBUG=0):
             findmeta.printDictionary(song_data)
 
 if __name__ == "__main__":
-    setData()
+    setData(DEBUG=1)

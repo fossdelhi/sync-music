@@ -21,7 +21,6 @@ script:
   - git clone -b syncing --single-branch https://github.com/fossdelhi/sync-music
   - cd sync-music
   - pip install -r requirements.txt
-
   - sudo bash ./setup.sh
   - flake8 ./src/*.py
     #    Ignoring the warning (F401) - that is, importing "project" module and

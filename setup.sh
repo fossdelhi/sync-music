@@ -21,17 +21,3 @@ chmod +x ~/sync-music/src/sync_music.py
 echo -e "\nCreating required symlinks..."
 ln ~/sync-music/src/generate_index.sh ~/.sync-music/scripts/generate_index.sh
 ln ~/sync-music/src/sync_music.py /usr/bin/sync-music
-
-echo -e "\nUpgrading pip"
-if which pip
-then
-    pip install --upgrade pip
-    pip install -r ~/sync-music/requirements.txt
-fi
-if which pip3
-then
-    pip3 install --upgrade pip
-    pip3 install -r ~/sync-music/requirements.txt
-fi
-
-echo -e "Requirements installed."

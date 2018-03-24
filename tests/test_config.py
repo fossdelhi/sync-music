@@ -9,12 +9,12 @@ class TestConfigFile(unittest.TestCase):
 
     """
     Following test cases run to test those functions which read and write data
-    to config files like keys.json.
+    to and from configuration file "keys.json".
     """
 
     def test_create_config_file(self):
         """
-        Creates a demo config file for this test series.
+        Creates a demo configuration file for this test series.
         """
 
         try:
@@ -26,7 +26,7 @@ class TestConfigFile(unittest.TestCase):
 
     def test_invalid_field(self):
         """
-        Case: when user give invalid field to configure.
+        Case: when user gives invalid field to configure.
         """
 
         self.assertFalse(
@@ -53,7 +53,7 @@ class TestConfigFile(unittest.TestCase):
         Case: when config file is found with empty values.
         """
 
-        # Creating file with empty values.
+        # Updating file with empty value.
         sync_music.update_config(
             ('dropbox.key', ''), 'config_test.json'
         )

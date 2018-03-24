@@ -8,7 +8,7 @@ import os
 class TestIndexGeneration(unittest.TestCase):
 
     """
-    Following test run to test multiple cases of user input, while giving
+    Following test run to check multiple cases of user inputs, while giving
     directories as arguments to this app for syncing.
 
     An index of songs is generated if user gives valid directories.
@@ -21,13 +21,11 @@ class TestIndexGeneration(unittest.TestCase):
         Case: When user gives a valid directory.
         """
 
-        self.assertTrue(
-            sync_music.gen_index((os.getcwd(),))
-        )
+        self.assertTrue(sync_music.gen_index((os.getcwd(),)))
 
     def test_dir_not_exist(self):
         """
-        Case: When any of the given directories doesn't exist.
+        Case: When any of the given directories not exist.
         """
 
         self.assertFalse(
@@ -44,7 +42,7 @@ class TestIndexGeneration(unittest.TestCase):
 
     def test_dir_not_given(self):
         """
-        Case: When user doesn't give any directory.
+        Case: When user gives empty directory.
         """
 
         self.assertFalse(sync_music.gen_index(('',)))

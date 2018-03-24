@@ -55,11 +55,16 @@ def getData(song, artists):
     track_generator = (track for track in tracks if found!=1) # using generators just to accomodate found and for together
     song_data = None
     for track in track_generator:
-        for artist in artists:
-            if artist.lower() in track['Artist(s)'].lower() and found != 1:
-                song_data = track
-                found = 1
-                break
+        if artists:
+            for artist in artists:
+                if artist.lower() in track['Artist(s)'].lower() and found != 1:
+                    song_data = track
+                    found = 1
+                    break
+        elif song.lower() == track['Track Name'].lower():
+            song_data = track
+            found = 1
+
     return song_data
     
 def stripNumbersAtBeginning(string):
@@ -100,6 +105,11 @@ def getTheSong(artist_and_song):
     if song_data is None: # For song names like "12. See you again.mp3"
         song = stripNumbersAtBeginning(song)
         song_data = getData(song, artists)
+
+    if song_data is None:###############
+        song_data = getData(song, None)
+        if song_data is None:
+            song_data = getData(getSongName(artist_and_song[-1]),None)
 
     if song_data is None:
         print("Can't find data for song: {}".format(song))

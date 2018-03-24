@@ -6,7 +6,10 @@ be documented in this file.
 [unreleased]
 Added
 - Album cover and icon setter
-- 
+- More file name support. Artist can now appear on either side of a -
+- Seperate function to get the song name and artist from
+  various combinations and confirm from spotify database
+- Song without artist name support
 
 [0.1.0] - 2017-03-20
 Added

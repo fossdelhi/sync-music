@@ -124,4 +124,4 @@ def setData(SONG_NAME_FILE = "index", DEBUG=0):
             findmeta.printDictionary(song_data)
 
 if __name__ == "__main__":
-    setData(DEBUG=1)
+    setData()

@@ -9,6 +9,7 @@ name = "pypi"
 
 spotipy = "*"
 "eyed3" = "*"
+requests = "*"
 
 
 [dev-packages]

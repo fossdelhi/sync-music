@@ -12,7 +12,7 @@ class testFindmetaMethods(unittest.TestCase):
                 self.assertEqual(
                     track["Artist(s)"],
                     "Wiz Khalifa, Charlie Puth"
-                    )
+                )
                 break
 
     def test_getCategories(self):
@@ -31,20 +31,20 @@ class testFindmetaMethods(unittest.TestCase):
 
     def test_getPlaylistTracks(self):
         tracks = findmeta.getPlaylistTracks(
-                        user="Spotify",
-                        playlist_id="37i9dQZF1DXcBWIGoYBM5M"
-                        )  # Uses Today's Top Hits Playlist
+            user="Spotify",
+            playlist_id="37i9dQZF1DXcBWIGoYBM5M"
+        )  # Uses Today's Top Hits Playlist
         self.assertGreaterEqual(
             tracks[0]["Popularity"],
             tracks[1]["Popularity"]
-            )
+        )
 
     def test_getTrackInfo(self):
         track = findmeta.getTrackInfo("2JzZzZUQj3Qff7wapcbKjc")
         self.assertEqual(
             track["Name Of Song"],
             "See You Again (feat. Charlie Puth)"
-            )
+        )
 
 
 if __name__ == "__main__":

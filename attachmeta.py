@@ -8,7 +8,7 @@ def splitByFirstOccurence(string, character):
         return [string]
     first_half = string[:string.find(character)]
     first_half = first_half.strip()
-    last_half = string[string.find(character)+len(character):]
+    last_half = string[string.find(character) + len(character):]
     if '(' in last_half:
         # part after the brackets is mostly not required for song name
         last_half = last_half[:last_half.find('(')]
@@ -42,7 +42,7 @@ def getArtists(string, featuring=0):
     feat_words = ['ft.', 'feat.', 'by', 'featuring']
     for feat in feat_words:
         if string.find(feat) != -1:
-            artists.append(string[string.find(feat)+len(feat):].strip())
+            artists.append(string[string.find(feat) + len(feat):].strip())
             found = 1
     for i in range(len(artists)):
         for feat in feat_words:
@@ -173,7 +173,7 @@ def setData(SONG_NAME_FILE="index", DEBUG=0):
 
                 print('Saved details for : {}'.format(
                     song_data['Name Of Song']
-                    ))
+                ))
             else:
                 print("{}\n Couldn't be found".format(song_files[i]))
         else:

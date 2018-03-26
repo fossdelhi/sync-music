@@ -18,10 +18,10 @@ def getTracks(search_string=None):
     for i in range(len(items)):
         album_name = items[i]["album"]["name"]
         album_type = items[i]["album"]["album_type"]
-        artists_names = ', '.join([
+        artists_names = ', '.join([  # ###
             items[i]["artists"][index]["name"]
             for index in range(len(items[i]["artists"]))
-            ])
+        ])
         track_name = items[i]["name"]
         track_id = items[i]["id"]
         track_popularity = items[i]["popularity"]
@@ -88,7 +88,7 @@ def getPlaylistTracks(user, playlist_id, limit=100):
         artists_names = ', '.join([
             items[i]["track"]["artists"][index]["name"]
             for index in range(len(items[i]["track"]["artists"]))
-            ])
+        ])
         track_name = items[i]["track"]["name"]
         popularity = items[i]["track"]["popularity"]
         track_id = items[i]["track"]["id"]
@@ -107,13 +107,13 @@ def getTrackInfo(track_id):
     items = spotify.track(track_id)
     name = items["name"]
     artists_names = ", ".join([
-            items["artists"][x]["name"]
-            for x in range(len(items["artists"]))
-            ])
+        items["artists"][x]["name"]
+        for x in range(len(items["artists"]))
+    ])
     album_artists = ", ".join([
         items["album"]["artists"][x]["name"]
         for x in range(len(items["album"]["artists"]))
-        ])
+    ])
     album_type = items["album"]["album_type"]
     album_name = items["album"]["name"]
     album_release = items["album"]["release_date"]
@@ -125,9 +125,9 @@ def getTrackInfo(track_id):
     image_link = ""
     icon_link = ""
     for image in images_link:
-        if image["height"]*image["width"] > max_image_res:
+        if image["height"] * image["width"] > max_image_res:
             image_link = image["url"]
-            max_image_res = image["height"]*image["width"]
+            max_image_res = image["height"] * image["width"]
         if image["height"] < 400:
             if image["height"] > max_icon_size:
                 max_icon_size = image["height"]
@@ -149,22 +149,22 @@ def getTrackInfo(track_id):
 def printDictionary(d, start_pos=0, end_pos=2):
     """ Prints dictionaries in list and seperate dictionaries too"""
     if type(d) is list:  # end_pos will also act as limit for no. of results
-        print("\n"+"_"*37 + "BEGIN" + "_"*37 + "\n")
-        for i in range(start_pos, end_pos+1):
+        print("\n" + "_" * 37 + "BEGIN" + "_" * 37 + "\n")
+        for i in range(start_pos, end_pos + 1):
             if i == len(d):
                 break
             if len(d) != 1:  # Skip item number for single track dictionary
-                print("Item no.: {}".format(i+1))
+                print("Item no.: {}".format(i + 1))
             for key, value in d[i].items():
                 print("{0}: {1}".format(key, value))
             print()
 
         if i == len(d):
-            print("_"*38 + "END" + "_"*38 + "\n")
+            print("_" * 38 + "END" + "_" * 38 + "\n")
             return
         inner_choice = input("Want more results? (y/n): ")
         if inner_choice.lower() in ['y', 'yes']:
-            printDictionary(d, start_pos=end_pos+1, end_pos=end_pos+5)
+            printDictionary(d, start_pos=end_pos + 1, end_pos=end_pos + 5)
 
     elif type(d) is dict:
         print()
@@ -193,8 +193,8 @@ if __name__ == "__main__":
             if inner_choice.lower() in ['y', 'yes']:
                 item_no = int(
                     input("Enter Item no. of the track you want details: ")
-                    )
-                printDictionary(getTrackInfo(tracks[item_no-1]["Track ID"]))
+                )
+                printDictionary(getTrackInfo(tracks[item_no - 1]["Track ID"]))
 
         elif choice == 2:
             categories = getCategories()
@@ -203,7 +203,7 @@ if __name__ == "__main__":
         elif choice == 3:
             playlists = getPlaylists(
                 search_string=input("Enter the category id: ")
-                )
+            )
             printDictionary(playlists, end_pos=5)
 
         elif choice == 4:

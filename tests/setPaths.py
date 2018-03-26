@@ -1,4 +1,5 @@
-import sys, os
+import sys
+import os
 
 current_dir = os.getcwd().split('/')
 if 'tests' in current_dir:

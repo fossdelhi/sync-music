@@ -1,0 +1,12 @@
+language: 
+    - python
+
+os: 
+    - linux
+
+install:
+    - pip install pipenv
+    - pipenv install .
+
+script:
+    - python3 -m  unittest discover tests

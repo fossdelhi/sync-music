@@ -4,6 +4,10 @@ language:
 os: 
     - linux
 
+branches:
+    only:
+    - metadata-manager
+
 install:
     - pip install pipenv
     - pipenv install .

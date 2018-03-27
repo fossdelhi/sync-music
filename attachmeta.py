@@ -4,6 +4,19 @@ import requests
 
 
 def splitByFirstOccurence(string, character):
+    """
+    Split a function by first occurence of a character or a substring,
+    and then strip the results.
+    Like most song names can have artists name seperated with an '&'
+    'Artist1 & Artist2' For this string, and character = '&',the
+    function would return ['Artist1', 'Artist2']. This function
+     also strips bracket content, to provide better search results.
+
+    :param string: String in which to search
+    :param character: character or substring which is to be searched
+
+    :returns: A list of 2 strings, stripped of spaces at the beginning and end
+    """
     if character not in string:
         return [string]
     first_half = string[:string.find(character)]
@@ -19,6 +32,15 @@ def splitByFirstOccurence(string, character):
 
 
 def getSongName(string):
+    """
+    Get song name from a string. If a string contains feat. words,
+    that list featuring artists. Then the function returns the part before it.
+    Else whole string is returned.
+
+    :param string: String from which song name is to be found
+
+    :returns: Possible song name from the string
+    """
     feat_words = ['ft.', 'feat.', 'by', 'featuring']
     for feat in feat_words:
         if string.find(feat) != -1:
@@ -28,11 +50,16 @@ def getSongName(string):
 
 def getArtists(string, featuring=0):
     """
-        featuring argument is supplied seperately when we want to explicitly
-        test it's presence else the artist list is returned again and get's
-        appended repeatedly. Even in song name if we want to test featuring
-        artists name, the song name would be returned if no featuring artist
-        is found.
+    Featuring argument is supplied seperately when we want to explicitly
+    test it's presence else the artist list is returned again and get's
+    appended repeatedly. Even in song name if we want to test featuring
+    artists name, the song name would be returned if no featuring artist
+    is found.
+
+    :param string: String from which artists name can be found
+    :param featuring: Flag for checking featuring artists
+
+    :returns: List of possible artists from the string
     """
     artists = []
     if string.find('&') != -1:
@@ -56,6 +83,15 @@ def getArtists(string, featuring=0):
 
 
 def getData(song, artists):
+    """
+    Get the data of a song from song name.
+    This uses song and artist name to narrow down to a single song.
+
+    :param song: Song name to be searched
+    :param artists: List of artists to be verified against song
+
+    :returns: Dictionary containing song data.
+    """
     tracks = findmeta.getTracks(song)
     found = 0
     track_generator = (track for track in tracks if found != 1)
@@ -77,8 +113,12 @@ def getData(song, artists):
 
 def stripNumbersAtBeginning(string):
     """
-    Stripping numbers in the beginning that might have been added to
+    Stripping numbers and dot in the beginning that might have been added to
     serialize the collection.
+
+    :param string: String from which numbers are to be stripped.
+
+    :returns: String stripped with numbers or numbers and dot.
     """
     temporary_index = 0
     for character in string:
@@ -94,8 +134,11 @@ def stripNumbersAtBeginning(string):
 def getTheSong(artist_and_song):
     """
     Check for song names with the spotify database
-    if no match is found with artist and names combinations
-    return none
+
+    :returns: Dictionary containing song data, if the song could be
+              found on spotify database
+
+              None if no match is found with artist and names combinations
     """
     artist_and_song = splitByFirstOccurence(artist_and_song, ' - ')
     song = getSongName(artist_and_song[-1])
@@ -133,6 +176,13 @@ def getTheSong(artist_and_song):
 
 
 def setData(SONG_NAME_FILE="index", DEBUG=0):
+    """
+    Sets the metadata to the song files, using eyed3 module
+
+    :param SONG_NAME_FILE: File from which song path are to be fetched
+    :param DEBUG: Set this to 1 to print results to screen, rather than adding
+                  to the songs repeatedly
+    """
     songPaths = []
     with open(SONG_NAME_FILE, 'r') as musicFile:
         for line in musicFile:

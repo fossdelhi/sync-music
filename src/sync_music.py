@@ -103,14 +103,14 @@ def get_config(config_file='~/.sync-music/config/keys.json'):
         return False
 
 
-def upload_dbx():
-    """upload music files
+def get_dropbox_object():
+    """
+    This function creates a dropbox object to make requests to dropbox API.
 
-    This function uploads songs, whose path is available in the file
-    "added.tmp".
+    arg1: none
 
-    Returns True: if songs get uploaded successfully.
-    Returns False: if uploading encounters any Connectivity or Auth issues.
+    Return: a valid dropbox object.
+    Return False: if dropbox object is not created successfully.
     """
 
     app_token = get_config()
@@ -118,7 +118,7 @@ def upload_dbx():
     if app_token is False:
         return False
 
-    # Creating a Dropbox object to make requests to the API.
+    # Creating a Dropbox object
     dbx = dropbox.Dropbox(app_token)
 
     # Checking token's validity.
@@ -129,6 +129,27 @@ def upload_dbx():
         return False
     except requests.exceptions.ConnectionError as er:
         print("**ConnectionError: ", er)
+        return False
+    return dbx
+
+
+def upload_dbx():
+    """upload music files to dropbox
+
+    This function uploads songs, whose path is available in the file
+    "added.tmp".
+
+    Returns True: if songs get uploaded successfully.
+    Returns False: if user denies to proceed for uploading.
+                   if dropbox object not created successfully.
+                   if uploading encounters any Connectivity or Auth issues.
+    """
+
+    if ask_to_proceed("uploading") is False:
+        return False
+
+    dbx = get_dropbox_object()
+    if dbx is False:
         return False
 
     # added.tmp is the file having paths of newly added songs to be uploaded.
@@ -157,49 +178,105 @@ def upload_dbx():
     return True
 
 
-def ask_to_upload():
+def download_dbx(download):
+    """download music files from dropbox
+
+    This function downloads your songs from dropbox.
+
+    Returns True: if songs get downloaded successfully.
+    Returns False: if user gives invalid option.
+                   if user denies to proceed with downloading.
+                   if dropbox object not created successfully.
+                   if ~/Music not found.
+                   if downloading encounters any Connectivity or Auth issues.
     """
-    This function prompts for user permission, for whether to upload newly
-    found songs or not.
 
-    arg1: None
+    home_dir = os.path.expanduser('~')
 
-    Return True: if songs are successfully uploaded or if user denies to
-                 upload them.
-    Return False: if songs are not uploaded successfully.
+    if download == 'all':
+        downloadable_songs = home_dir+'/.sync-music/tmpfiles/Index'
+    else:
+        print("\nCouldn't recognize \"%s\" option. See: sync-music --help" %
+              download)
+        return False
+
+    print("Following songs are available to download.")
+    subprocess.call(['cat', downloadable_songs])
+
+    if ask_to_proceed("downloading") is False:
+        return False
+
+    dbx = get_dropbox_object()
+    if dbx is False:
+        return False
+
+    if os.path.isdir(home_dir+'/Music'):
+        saving_dir = home_dir+'/Music/'
+    else:
+        print("~/Music not found."
+              "Please make the directory and then try again.")
+        return False
+
+    with open(downloadable_songs, 'r') as f:
+        for song in f:
+            song = song.rstrip('\n')
+
+            song_name = (song.split('/'))[-1]
+            try:
+                dbx.files_download_to_file(
+                    saving_dir+song_name, '/'+song_name
+                )
+                print("Downloaded: ", song_name)
+            except dropbox.exceptions.HttpError as err:
+                print("**HttpError: ", err)
+                return False
+            except requests.exceptions.ConnectionError as er:
+                print("**ConnectionError: ", er)
+                return False
+    return True
+
+
+def ask_to_proceed(reason=""):
+    """
+    This function prompts for user permission, for whether to upload/download
+     songs.
+
+    arg1 reason: it can be "uploading" or "downloading".
+    Return True: if user grants the permission to upload/download.
+
+    Return False: if user denies the permission to upload/download.
     """
 
     choice = ""
     while choice not in ('y', 'Y', 'n', 'N'):
-        choice = input("\nWould you like to upload these songs on"
-                       " dropbox (y/n)?: ")
+        choice = input("Would you like to proceed with %s (y/n)?: " % reason)
         if choice in ('y', 'Y'):
-            if upload_dbx():
-                return True
-            else:
-                return False
-        elif choice == 'n' or choice == 'N':
             return True
+        elif choice in ('n', 'N'):
+            return False
         else:
             print("\nIncorrect input!")
 
 
 @click.command()
 @click.argument('dirs', nargs=-1, required=False)
-@click.option('--config',  nargs=2, type=str,
-              help="To set configurations e.i:\n"
-              "--config dropbox.key <API_key>")
-def main(dirs, config):
-
+@click.option('--config', '-c',  nargs=2, type=str,
+              help="To set API token: "
+              "--config dropbox.key 'token'")
+@click.option('--download', '-d', help="Download all you songs back.\n")
+def main(dirs, config, download):
     if config and update_config(config):
         print("Configured successfully.")
+    # gen_index(dirs) == 0, if songs are available to upload.
     elif dirs and gen_index(dirs) == 0:
-        if ask_to_upload():
+        if upload_dbx():
             print("\nSongs uploaded successfully.")
-        else:
-            exit(1)
+    elif download:
+        if download_dbx(download):
+            print("\nSongs downloaded successfully.")
     else:
         exit(1)
+    exit(0)
 
 
 if __name__ == '__main__':

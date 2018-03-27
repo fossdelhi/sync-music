@@ -14,8 +14,6 @@ class TestIndexGeneration(unittest.TestCase):
     An index of songs is generated if user gives valid directories.
     """
 
-    __user_home = os.path.expanduser('~')
-
     def test_dir_found(self):
         """
         Case: When user gives a valid directory.

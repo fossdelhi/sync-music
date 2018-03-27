@@ -11,7 +11,6 @@ echo -e "\nMaking data files..."
 touch ~/.sync-music/tmpfiles/index.tmp
 touch ~/.sync-music/tmpfiles/Index
 touch ~/.sync-music/tmpfiles/added.tmp
-touch ~/.sync-music/tmpfiles/deleted.tmp
 touch ~/.sync-music/config/keys.json
 
 echo -e "\nGiving executable permissions..."

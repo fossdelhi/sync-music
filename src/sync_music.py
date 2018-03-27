@@ -10,16 +10,19 @@ import requests
 def gen_index(dirs):
     """generates index.tmp
 
-    This function calls bash script "generate_index.sh" to generate file
-    "index.tmp" to store address of all mp3 files from directories that are
-    passed as argument.
+    This function calls bash script "generate_index.sh" to generate
+    file "index.tmp" to store address of all mp3 files from directories
+    that are passed as argument.
 
-    arg1 dirs: tuple of directories.
+    :param dirs: tuple of directories.
 
-    Return False: if directory given is null string.
-    Return False: when bash script couldn't find the required directory.
-    Return 0: if Index is not updated and added.tmp is successfully generated.
-    Return 3: if Index is already updated and no added.tmp is generated.
+    :returns: False, if directory given is null string.
+    :returns: False, when bash script could not find the required
+              directory.
+    :returns: 0, if Index is not updated and added.tmp is successfully
+              generated.
+    :returns: 3, if Index is already updated and no added.tmp is
+              generated.
     """
 
     if dirs == ('',):
@@ -31,7 +34,8 @@ def gen_index(dirs):
     call_script = list(dirs)
     call_script.insert(0, script_path)
 
-    # res = 0 if added.tmp is found, and res = 3 if Index is already updated.
+    # res = 0 if added.tmp is found and
+    # res = 3 if Index is already updated.
     res = subprocess.call(call_script)
     if res not in (0, 3):
         return False
@@ -43,15 +47,16 @@ def update_config(config,
                   config_file='~/.sync-music/config/keys.json'):
     """update user configuration
 
-    This function writes configuration in keys.json, for the field whose "key"
-    and "value" is given by user as arguments.
+    This function writes configuration in keys.json, for the field
+    whose "key" and "value" is given by user as arguments.
 
-    arg1 config: tuple consist of ("field of configuration", "value").
-    arg2 config_file: path to configuration file (keys.json). Default path is
-    setup by executing "setup.sh"
+    :param config: tuple consist of ("field of configuration", "value")
+    :param config_file: path to configuration file (keys.json).
+                        Default path is setup by executing "setup.sh"
 
-    Return Flase: if "field of configuration" is invalid.
-    Return True: if keys.json is found and configurations are updated.
+    :returns: False, if "field of configuration" is invalid.
+    :returns: True, if keys.json is found and configurations are
+              updated.
     """
 
     if config[0] != 'dropbox.key':
@@ -76,14 +81,15 @@ def get_config(config_file='~/.sync-music/config/keys.json'):
     """get user configurations from keys.json
 
     This function brings the configration from keys.json. And if
-    configurations are not present, then it also give a user friendly message
-    to first update their configurations and then try again.
+    configurations are not present, then it also give a user friendly
+    message to first update their configurations and then try again.
 
-    arg1 config_file: path to configuration file. Default path is setup by
-                      executing "setup.sh".
+    :param config_file: path to configuration file. Default path is
+                        setup by executing "setup.sh".
 
-    Return False: If either keys.json is empty or not found.
-    Return API token: If configurations are successfully read from the file.
+    :returns: False, if either keys.json is empty or not found.
+    :returns: API token, if configurations are successfully read from
+              the file.
     """
 
     config_file = os.path.expanduser(config_file)
@@ -105,12 +111,11 @@ def get_config(config_file='~/.sync-music/config/keys.json'):
 
 def get_dropbox_object():
     """
-    This function creates a dropbox object to make requests to dropbox API.
+    This function creates a dropbox object to make requests to
+    dropbox API.
 
-    arg1: none
-
-    Return: a valid dropbox object.
-    Return False: if dropbox object is not created successfully.
+    :returns: a valid dropbox object.
+    :returns: False, if dropbox object is not created successfully.
     """
 
     app_token = get_config()
@@ -139,10 +144,10 @@ def upload_dbx():
     This function uploads songs, whose path is available in the file
     "added.tmp".
 
-    Returns True: if songs get uploaded successfully.
-    Returns False: if user denies to proceed for uploading.
-                   if dropbox object not created successfully.
-                   if uploading encounters any Connectivity or Auth issues.
+    :returns: True, if songs get uploaded successfully.
+    :returns: False, if user denies to proceed for uploading.
+                     if dropbox object not created successfully.
+                     if uploading stops due to Connectivity/Auth error.
     """
 
     if ask_to_proceed("uploading") is False:
@@ -152,7 +157,7 @@ def upload_dbx():
     if dbx is False:
         return False
 
-    # added.tmp is the file having paths of newly added songs to be uploaded.
+    # added.tmp: file having paths of newly added songs to be uploaded.
     songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
     Index_file = os.path.expanduser('~/.sync-music/tmpfiles/Index')
 
@@ -183,12 +188,13 @@ def download_dbx(download):
 
     This function downloads your songs from dropbox.
 
-    Returns True: if songs get downloaded successfully.
-    Returns False: if user gives invalid option.
-                   if user denies to proceed with downloading.
-                   if dropbox object not created successfully.
-                   if ~/Music not found.
-                   if downloading encounters any Connectivity or Auth issues.
+    :returns: True, if songs get downloaded successfully.
+    :returns: False, if user gives invalid option,
+                     if user denies to proceed with downloading,
+                     if dropbox object not created successfully,
+                     if ~/Music not found,
+                     if downloading stops due to any Connectivity or
+                     Auth error.
     """
 
     home_dir = os.path.expanduser('~')
@@ -238,13 +244,13 @@ def download_dbx(download):
 
 def ask_to_proceed(reason=""):
     """
-    This function prompts for user permission, for whether to upload/download
-     songs.
+    This function prompts for user permission, for whether to
+    upload/download songs.
 
-    arg1 reason: it can be "uploading" or "downloading".
-    Return True: if user grants the permission to upload/download.
+    :param reason: it can be "uploading" or "downloading".
+    :returns: True, if user grants the permission to upload/download.
 
-    Return False: if user denies the permission to upload/download.
+    :returns: False, if user denies the permission to upload/download.
     """
 
     choice = ""

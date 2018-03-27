@@ -10,11 +10,12 @@ import sync_music
 class TestDropboxAPI(unittest.TestCase):
 
     """
-    This module is used to test dropbox API calls, with configurations stored
-    in keys.json.
+    This module is used to test dropbox API calls, with
+    configurations stored in keys.json.
 
-    For this test series make sure you have configured sync-music with Dropbox
-    API token with command " $ sync-music --config dropbox.key "API_token" "
+    For this test series make sure you have configured sync-music with
+    Dropbox API token with command " $ sync-music --config dropbox.key
+    API_token" "
 
     Note: Naming of tests is significant here.
     """
@@ -70,8 +71,8 @@ class TestDropboxAPI(unittest.TestCase):
 
     def test_file_download(self):
         """
-        Case: to download the file from dropbox. Testing to download the same
-        file that has been created in the above test.
+        Case: to download the file from dropbox. Testing to download
+        the same file that has been created in the above test.
         """
 
         app_token = sync_music.get_config()

@@ -8,8 +8,8 @@ import os
 class TestIndexGeneration(unittest.TestCase):
 
     """
-    Following test run to check multiple cases of user inputs, while giving
-    directories as arguments to this app for syncing.
+    Following test run to check multiple cases of user inputs, while
+    giving directories as arguments to this app for syncing.
 
     An index of songs is generated if user gives valid directories.
     """
@@ -32,8 +32,8 @@ class TestIndexGeneration(unittest.TestCase):
 
     def test_dir_not_found(self):
         """
-        Case: When user gives relative path to directories, and this app fails
-        to find them.
+        Case: When user gives relative path to directories, and this
+        app fails to find them.
         """
 
         self.assertFalse(sync_music.gen_index(('../../',)))

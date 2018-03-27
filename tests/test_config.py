@@ -8,8 +8,8 @@ import os
 class TestConfigFile(unittest.TestCase):
 
     """
-    Following test cases run to test those functions which read and write data
-    to and from configuration file "keys.json".
+    Following test cases run to test those functions which read and
+    write data to and from configuration file "keys.json".
     """
 
     def test_create_config_file(self):
@@ -71,7 +71,8 @@ class TestConfigFile(unittest.TestCase):
             )
         )
 
-        # getting configuration that are just added in above assert statement.
+        # getting configuration that are just added in above assert
+        # statement.
         self.assertEqual(
             sync_music.get_config('config_test.json'), 'valid_value'
         )

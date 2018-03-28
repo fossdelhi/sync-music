@@ -51,7 +51,7 @@ def getSongName(string):
 def getArtists(string, featuring=0):
     """
     Featuring argument is supplied seperately when we want to explicitly
-    test it's presence else the artist list is returned again and get's
+    test its presence else the artist list is returned again and gets
     appended repeatedly. Even in song name if we want to test featuring
     artists name, the song name would be returned if no featuring artist
     is found.
@@ -95,7 +95,8 @@ def getData(song, artists):
     tracks = findmeta.getTracks(song)
     found = 0
     track_generator = (track for track in tracks if found != 1)
-    # using generators just to accomodate found and for together
+    # using generators just to accomodate found condition and tracks together
+    # in the loop condition.
     song_data = None
     for track in track_generator:
         if artists:

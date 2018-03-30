@@ -2,7 +2,7 @@
 from authorize import spotify
 
 
-def getTracks(search_string=None):
+def get_tracks(search_string=None):
     """
     Get mulitple maching tracks along with their details,
     details like artist, album, and so on.
@@ -13,7 +13,7 @@ def getTracks(search_string=None):
 
     """
     if search_string is None:
-        print('Please use a search string with getTracks function')
+        print('Please use a search string with get_tracks function')
         exit(0)
     item_type = "tracks"
     info_dict = spotify.search(q=search_string, limit=10, type='track')
@@ -40,7 +40,7 @@ def getTracks(search_string=None):
     return tracks
 
 
-def getCategories():
+def get_categories():
     """
     Spotify has categories, under this, it contains different playlists.
     This function returns available categories.
@@ -60,7 +60,7 @@ def getCategories():
     return categories
 
 
-def getPlaylists(search_string=None):
+def get_playlists(search_string=None):
     """
     This function will be used to get playlists of a specified category
 
@@ -85,7 +85,7 @@ def getPlaylists(search_string=None):
     return playlists
 
 
-def getPlaylistTracks(user, playlist_id, limit=100):
+def get_playlist_tracks(user, playlist_id, limit=100):
     """
     Get all the tracks under a playlist
 
@@ -119,7 +119,7 @@ def getPlaylistTracks(user, playlist_id, limit=100):
     return tracks
 
 
-def getTrackInfo(track_id):
+def get_track_info(track_id):
     """
     Get information about a specific track.
 
@@ -169,7 +169,7 @@ def getTrackInfo(track_id):
     return track
 
 
-def printDictionary(d, start_pos=0, end_pos=2):
+def print_dictionary(d, start_pos=0, end_pos=2):
     """
     Prints dictionaries in list and seperate dictionaries too
     Since displaying all the contents at once might look cumbersome on the
@@ -193,63 +193,17 @@ def printDictionary(d, start_pos=0, end_pos=2):
                 print("{0}: {1}".format(key, value))
             print()
 
+        inner_choice = input("Want more results? (y/n): ")
+        if inner_choice.lower() in ['y', 'yes']:
+            print_dictionary(d, start_pos=end_pos + 1, end_pos=end_pos + 5)
+
         if i == len(d):
             print("_" * 38 + "END" + "_" * 38 + "\n")
             return 1
-        inner_choice = input("Want more results? (y/n): ")
-        if inner_choice.lower() in ['y', 'yes']:
-            printDictionary(d, start_pos=end_pos + 1, end_pos=end_pos + 5)
 
     elif type(d) is dict:
         print()
         for key, value in d.items():
             print("{0}: {1}".format(key, value))
         print()
-
-
-if __name__ == "__main__":
-
-    while True:
-        choice = int(input("Menu:\n"
-                           "1) Search for a track\n"
-                           "2) See available music categories\n"
-                           "3) See available playlists in a category\n"
-                           "4) Get playlist tracks\n"
-                           "5) Get Track Info\n"
-                           "6) Exit\n"
-                           ))
-        print()
-        if choice == 1:
-            search_string = input('Enter the name of the track to search: ')
-            tracks = getTracks(search_string=search_string)
-            printDictionary(tracks)  # List top 3 songs that matched
-            inner_choice = input("Do you want details on a track? (y/n) ")
-            if inner_choice.lower() in ['y', 'yes']:
-                item_no = int(
-                    input("Enter Item no. of the track you want details: ")
-                )
-                printDictionary(getTrackInfo(tracks[item_no - 1]["Track ID"]))
-
-        elif choice == 2:
-            categories = getCategories()
-            printDictionary(categories, end_pos=5)  # Lists 5 categories
-
-        elif choice == 3:
-            playlists = getPlaylists(
-                search_string=input("Enter the category id: ")
-            )
-            printDictionary(playlists, end_pos=5)
-
-        elif choice == 4:
-            owner = input("Enter the playlist owner: ")
-            playlist_id = input("Enter the playlist id: ")
-            tracks = getPlaylistTracks(owner, playlist_id, limit=25)
-            printDictionary(tracks, end_pos=5)
-
-        elif choice == 5:
-            track_id = input("Enter the Track ID: ")
-            track = getTrackInfo(track_id)
-            printDictionary(track)
-
-        else:
-            exit(0)
+        return 1

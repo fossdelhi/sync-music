@@ -1,12 +1,11 @@
 import unittest
-import setPaths
-import findmeta
+from src import findmeta
 
 
 class testFindmetaMethods(unittest.TestCase):
 
-    def test_getTracks(self):
-        tracks = findmeta.getTracks(search_string="See You Again")
+    def test_get_tracks(self):
+        tracks = findmeta.get_tracks(search_string="See You Again")
         for track in tracks:
             if track["Track Name"] == "See You Again (feat. Charlie Puth)":
                 self.assertEqual(
@@ -15,22 +14,22 @@ class testFindmetaMethods(unittest.TestCase):
                 )
                 break
 
-    def test_getCategories(self):
-        categories = findmeta.getCategories()
+    def test_get_categories(self):
+        categories = findmeta.get_categories()
         for category in categories:
             if category["Category Name"] == "Top Lists":
                 assert True
                 break
 
-    def test_getPlaylists(self):
-        playlists = findmeta.getPlaylists(search_string="toplists")
+    def test_get_playlists(self):
+        playlists = findmeta.get_playlists(search_string="toplists")
         for playlist in playlists:
             if playlist["Playlist Name"] == "Today's Top Hits":
                 assert True
                 break
 
-    def test_getPlaylistTracks(self):
-        tracks = findmeta.getPlaylistTracks(
+    def test_get_playlist_tracks(self):
+        tracks = findmeta.get_playlist_tracks(
             user="Spotify",
             playlist_id="37i9dQZF1DXcBWIGoYBM5M"
         )  # Uses Today's Top Hits Playlist
@@ -39,8 +38,8 @@ class testFindmetaMethods(unittest.TestCase):
             tracks[1]["Popularity"]
         )
 
-    def test_getTrackInfo(self):
-        track = findmeta.getTrackInfo("2JzZzZUQj3Qff7wapcbKjc")
+    def test_get_track_info(self):
+        track = findmeta.get_track_info("2JzZzZUQj3Qff7wapcbKjc")
         self.assertEqual(
             track["Name Of Song"],
             "See You Again (feat. Charlie Puth)"

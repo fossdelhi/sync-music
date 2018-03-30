@@ -11,7 +11,7 @@ Added
   various combinations and confirm from spotify database
 - Song without artist name support
 
-[0.1.0] - 2017-03-20
+[0.1.0] - 2018-03-20
 Added
 - Metadata fetching using spotify API
 - Metadata attaching using eyeD3 module

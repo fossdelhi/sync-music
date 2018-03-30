@@ -3,7 +3,7 @@ import eyed3
 import requests
 
 
-def splitByFirstOccurence(string, character):
+def split_by_first_occurence(string, character):
     """
     Split a function by first occurence of a character or a substring,
     and then strip the results.
@@ -31,7 +31,7 @@ def splitByFirstOccurence(string, character):
     return [first_half, last_half]
 
 
-def getSongName(string):
+def get_song_name(string):
     """
     Get song name from a string. If a string contains feat. words,
     that list featuring artists. Then the function returns the part before it.
@@ -48,7 +48,7 @@ def getSongName(string):
     return string
 
 
-def getArtists(string, featuring=0):
+def get_artists(string, featuring=0):
     """
     Featuring argument is supplied seperately when we want to explicitly
     test its presence else the artist list is returned again and gets
@@ -63,7 +63,7 @@ def getArtists(string, featuring=0):
     """
     artists = []
     if string.find('&') != -1:
-        artists = splitByFirstOccurence(string, '&')
+        artists = split_by_first_occurence(string, '&')
         # Returns single element list, if character not in string
     found = 0
     feat_words = ['ft.', 'feat.', 'by', 'featuring']
@@ -82,7 +82,7 @@ def getArtists(string, featuring=0):
     return artists
 
 
-def getData(song, artists):
+def get_data(song, artists):
     """
     Get the data of a song from song name.
     This uses song and artist name to narrow down to a single song.
@@ -92,7 +92,7 @@ def getData(song, artists):
 
     :returns: Dictionary containing song data.
     """
-    tracks = findmeta.getTracks(song)
+    tracks = findmeta.get_tracks(song)
     found = 0
     track_generator = (track for track in tracks if found != 1)
     # using generators just to accomodate found condition and tracks together
@@ -105,14 +105,14 @@ def getData(song, artists):
                     song_data = track
                     found = 1
                     break
-        elif song.lower() == getSongName(track['Track Name']).lower():
+        elif song.lower() == get_song_name(track['Track Name']).lower():
             song_data = track
             found = 1
 
     return song_data
 
 
-def stripNumbersAtBeginning(string):
+def strip_numbers_at_beginning(string):
     """
     Stripping numbers and dot in the beginning that might have been added to
     serialize the collection.
@@ -132,7 +132,7 @@ def stripNumbersAtBeginning(string):
     return string.strip()
 
 
-def getTheSong(artist_and_song):
+def get_the_song(artist_and_song):
     """
     Check for song names with the spotify database
 
@@ -141,34 +141,34 @@ def getTheSong(artist_and_song):
 
               None if no match is found with artist and names combinations
     """
-    artist_and_song = splitByFirstOccurence(artist_and_song, ' - ')
-    song = getSongName(artist_and_song[-1])
-    artists = getArtists(artist_and_song[0])
-    if getArtists(artist_and_song[-1], featuring=1):
+    artist_and_song = split_by_first_occurence(artist_and_song, ' - ')
+    song = get_song_name(artist_and_song[-1])
+    artists = get_artists(artist_and_song[0])
+    if get_artists(artist_and_song[-1], featuring=1):
         # Only checks if any featuring artist is provided
-        artists.extend(getArtists(artist_and_song[-1], featuring=1))
-    song_data = getData(song, artists)
+        artists.extend(get_artists(artist_and_song[-1], featuring=1))
+    song_data = get_data(song, artists)
     if song_data is None:
         # Strip numbers that might appear before artists name in
         # beginning of filename
-        artists[0] = stripNumbersAtBeginning(artists[0])
-        song_data = getData(song, artists)
+        artists[0] = strip_numbers_at_beginning(artists[0])
+        song_data = get_data(song, artists)
 
     if song_data is None:
-        song = getSongName(artist_and_song[0])
-        artists = getArtists(artist_and_song[-1])
-        if getArtists(artist_and_song[0], featuring=1):
-            artists.extend(getArtists(artist_and_song[0], featuring=1))
-        song_data = getData(song, artists)
+        song = get_song_name(artist_and_song[0])
+        artists = get_artists(artist_and_song[-1])
+        if get_artists(artist_and_song[0], featuring=1):
+            artists.extend(get_artists(artist_and_song[0], featuring=1))
+        song_data = get_data(song, artists)
 
     if song_data is None:  # For song names like "12. See you again.mp3"
-        song = stripNumbersAtBeginning(song)
-        song_data = getData(song, artists)
+        song = strip_numbers_at_beginning(song)
+        song_data = get_data(song, artists)
 
     if song_data is None:  # Find for exact name match if other things fail
-        song_data = getData(song, None)
+        song_data = get_data(song, None)
         if song_data is None:
-            song_data = getData(getSongName(artist_and_song[-1]), None)
+            song_data = get_data(get_song_name(artist_and_song[-1]), None)
 
     if song_data is None:
         print("Can't find data for song: {}".format(song))
@@ -176,7 +176,7 @@ def getTheSong(artist_and_song):
     return song_data
 
 
-def setData(SONG_NAME_FILE="index", DEBUG=0):
+def set_data(SONG_NAME_FILE="index", DEBUG=0):
     """
     Sets the metadata to the song files, using eyed3 module
 
@@ -184,29 +184,29 @@ def setData(SONG_NAME_FILE="index", DEBUG=0):
     :param DEBUG: Set this to 1 to print results to screen, rather than adding
                   to the songs repeatedly
     """
-    songPaths = []
-    with open(SONG_NAME_FILE, 'r') as musicFile:
-        for line in musicFile:
-            songPaths.append(line.strip())
+    song_paths = []
+    with open(SONG_NAME_FILE, 'r') as music_file:
+        for line in music_file:
+            song_paths.append(line.strip())
 
-    song_files = [x.split('/')[-1] for x in songPaths]
+    song_files = [x.split('/')[-1] for x in song_paths]
     song_files = [x.strip('.mp3') for x in song_files]
 
     for i in range(len(song_files)):
         artist_and_song = song_files[i]
-        song_data = getTheSong(artist_and_song)
+        song_data = get_the_song(artist_and_song)
         if song_data is None:
             continue
-        song_data = findmeta.getTrackInfo(song_data["Track ID"])
+        song_data = findmeta.get_track_info(song_data["Track ID"])
 
         if DEBUG != 1:
-            audio_file = eyed3.load(songPaths[i])
+            audio_file = eyed3.load(song_paths[i])
             if audio_file:
                 try:
                     audio_file.tag.artist = song_data["Artist(s)"]
                 except AttributeError:
                     # To add id3 tags if they aren't present
-                    audio_file.initTag()
+                    audio_file.init_tag()
                     audio_file.tag.artist = song_data["Artist(s)"]
                 audio_file.tag.album = song_data["Album Name"]
                 audio_file.tag.album_artist = song_data["Album Artist(s)"]
@@ -229,8 +229,8 @@ def setData(SONG_NAME_FILE="index", DEBUG=0):
                 print("{}\n Couldn't be found".format(song_files[i]))
         else:
             print('Details of song found are: ')
-            findmeta.printDictionary(song_data)
+            findmeta.print_dictionary(song_data)
 
 
 if __name__ == "__main__":
-    setData()
+    set_data()

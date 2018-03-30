@@ -39,7 +39,9 @@ class testAttachmetaMethods(unittest.TestCase):
 
     def test_get_data(self):
         self.assertEqual(
-            attachmeta.get_data('see you again', ['wiz khalifa'])["Track Name"],
+            attachmeta.get_data(
+                'see you again', ['wiz khalifa']
+            )["Track Name"],
             'See You Again (feat. Charlie Puth)'
         )
         self.assertIsNone(

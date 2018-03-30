@@ -1,4 +1,4 @@
-import findmeta
+from . import findmeta
 import eyed3
 import requests
 

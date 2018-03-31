@@ -23,3 +23,4 @@ A file to keep a log of changes made in this project.
 ==========================
 * [2018-03-13]
     * Added pipenv compatiblity to avoid global installations.
+    * Simplified .travis.yml: removed unnecessary commands.

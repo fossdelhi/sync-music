@@ -1,6 +1,6 @@
-#!/bin/bash
 
-cd ~
+pip install pipenv
+pipenv install .
 
 echo -e "\nCreating directory structure..."
 mkdir -p ~/.sync-music/tmpfiles/
@@ -14,9 +14,9 @@ touch ~/.sync-music/tmpfiles/added.tmp
 touch ~/.sync-music/config/keys.json
 
 echo -e "\nGiving executable permissions..."
-chmod +x ~/sync-music/src/generate_index.sh
-chmod +x ~/sync-music/src/sync_music.py
+chmod +x ./src/generate_index.sh
+chmod +x ./src/sync_music.py
 
 echo -e "\nCreating required symlinks..."
-ln ~/sync-music/src/generate_index.sh ~/.sync-music/scripts/generate_index.sh
-ln ~/sync-music/src/sync_music.py /usr/bin/sync-music
+ln ./src/generate_index.sh ~/.sync-music/scripts/generate_index.sh
+sudo ln ./src/sync_music.py /usr/bin/sync-music

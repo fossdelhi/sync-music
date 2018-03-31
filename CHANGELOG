@@ -1,13 +1,25 @@
-[ChangeLog]
+### ChangeLog
 
 A file to keep a log of changes made in this project.
 
-[Unreleased]
 --------------------
+#### Version [0.1.0] - 2018-03-19
+==========================
+* [2018-03-19]
     * Added first version of python script to upload songs on dropbox.
+* [2018-03-20]
     * Added initial version of sync-music.py.
     * Added shell script to fetch songs address.
+* [2018-03-21]
     * Added setup.sh file, to setup a working copy of the application.
+* [2018-03-22]
     * Added feature of adding dropbox configuration (API token) through CLI.
+* [2018-03-23]
     * Integrated python script as a function to upload songs on dropbox.
+* [2018-03-27]
     * Added feature to download songs from dropbox
+--------------------
+#### Version [0.1.1] - 2018-03-31
+==========================
+* [2018-03-13]
+    * Added pipenv compatiblity to avoid global installations.

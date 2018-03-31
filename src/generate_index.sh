@@ -7,8 +7,8 @@
 # arg $0: This script file
 # arg $1-$9: Directories to search for mp3 files.
 #
-# exit 1: If given directory is not a valid directory.
-# exit 2: If given directory is valid but couldn't found by the application.
+# exit 1: Falure, If given directory is not a valid directory.
+# exit 2: Failure, If given directory is valid but couldn't found by the application.
 # exit $?: exit status of "generate_updates()" function.
 
 # checks the existance of given directories.
@@ -47,7 +47,7 @@ do
 done
 
 
-generate_updates()
+generate_list_of_new_songs()
 {
 # This function generates following file:
 #   1. "added.tmp": if new songs are found in the given directory.
@@ -56,7 +56,7 @@ generate_updates()
 # arg $2: index.tmp
 #
 # exit 0: Success, if index.tmp is found and added.tmp is not empty.
-# exit 3: Success, if added.tmp is empty that means Index is already updated
+# exit 3: Failure, if added.tmp is empty that means Index is already updated
 #         with no pending songs to upload.
 
 # Compares Index with index.tmp and generates file having songs that are newly
@@ -68,14 +68,14 @@ diff -n "$1" "$2" | grep '^/' > "$HOME"/.sync-music/tmpfiles/added.tmp
 if [ -s "$HOME"/.sync-music/tmpfiles/added.tmp ]
 then
     echo -e "\n\033[1;33mFollowing songs are newly found in the directory.:\033[0m\n."
-    grep '^/' "$HOME"/.sync-music/tmpfiles/added.tmp
+    cat '^/' "$HOME"/.sync-music/tmpfiles/added.tmp
     exit 0
 else
-    echo -e "\nIndex already upto date."
+    echo -e "\033[1;36m\nNo new song is found to upload!\n"
     exit 3
 fi
 }
 
 
-generate_updates "$HOME"/.sync-music/tmpfiles/Index "$HOME"/.sync-music/tmpfiles/index.tmp
+generate_list_of_new_songs "$HOME"/.sync-music/tmpfiles/Index "$HOME"/.sync-music/tmpfiles/index.tmp
 exit "$?"

@@ -1,49 +1,32 @@
 #!/usr/bin/env python3
-import project
 import unittest
-import sync_music
 import os
+from src import sync_music
 
 
-class TestIndexGeneration(unittest.TestCase):
+class TestGenerateTempFiles(unittest.TestCase):
 
     """
     Following test run to check multiple cases of user inputs, while
-    giving directories as arguments to this app for syncing.
+    giving directories as arguments to this app for syncing songs.
 
-    An index of songs is generated if user gives valid directories.
+    Temporary files are generated if either the directory or new songs
+    are found.
     """
 
-    def test_dir_found(self):
-        """
-        Case: When user gives a valid directory.
-        """
+    def test_directory_found(self):
+        self.assertTrue(sync_music.find_new_songs((os.getcwd(),)) in (0, 3))
 
-        self.assertTrue(sync_music.gen_index((os.getcwd(),)))
-
-    def test_dir_not_exist(self):
-        """
-        Case: When any of the given directories not exist.
-        """
-
-        self.assertFalse(
-            sync_music.gen_index((os.getcwd(), "./non_existing_dir1",))
+    def test_directory_not_exist(self):
+        self.assertEqual(
+            sync_music.find_new_songs(("./non_existing_directory",)), 1
         )
 
-    def test_dir_not_found(self):
-        """
-        Case: When user gives relative path to directories, and this
-        app fails to find them.
-        """
+    def test_directory_not_found(self):
+        self.assertEqual(sync_music.find_new_songs(('../../',)), 2)
 
-        self.assertFalse(sync_music.gen_index(('../../',)))
-
-    def test_dir_not_given(self):
-        """
-        Case: When user gives empty directory.
-        """
-
-        self.assertFalse(sync_music.gen_index(('',)))
+    def test_directory_not_given(self):
+        self.assertFalse(sync_music.find_new_songs(('',)))
 
 
 if __name__ == '__main__':

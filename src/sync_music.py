@@ -7,12 +7,12 @@ import dropbox
 import requests
 
 
-def gen_index(dirs):
-    """generates index.tmp
-
-    This function calls bash script "generate_index.sh" to generate
-    file "index.tmp" to store address of all mp3 files from directories
-    that are passed as argument.
+def find_new_songs(dirs):
+    """
+    This function calls bash script "generate_temp_files.sh" which
+    finds newly added(that are not uploaded) songs in given
+    directories. If new songs are found "added.tmp" is generated
+    otherwise not.
 
     :param dirs: tuple of directories.
 
@@ -34,19 +34,18 @@ def gen_index(dirs):
     call_script = list(dirs)
     call_script.insert(0, script_path)
 
-    # res = 0 if added.tmp is found and
-    # res = 3 if Index is already updated.
     res = subprocess.call(call_script)
-    if res not in (0, 3):
-        return False
+    # res = 0 if new songs are found and added.tmp is generated and
+    # res = 3 if no new song is found and added.tmp not generated.
+    if res is 0:
+        return True
     else:
         return res
 
 
-def update_config(config,
-                  config_file='~/.sync-music/config/keys.json'):
-    """update user configuration
-
+def update_user_config_in_file(config,
+                               config_file='~/.sync-music/config/keys.json'):
+    """
     This function writes configuration in keys.json, for the field
     whose "key" and "value" is given by user as arguments.
 
@@ -77,9 +76,8 @@ def update_config(config,
         return True
 
 
-def get_config(config_file='~/.sync-music/config/keys.json'):
-    """get user configurations from keys.json
-
+def get_user_config_from_file(config_file='~/.sync-music/config/keys.json'):
+    """
     This function brings the configration from keys.json. And if
     configurations are not present, then it also give a user friendly
     message to first update their configurations and then try again.
@@ -118,7 +116,7 @@ def get_dropbox_object():
     :returns: False, if dropbox object is not created successfully.
     """
 
-    app_token = get_config()
+    app_token = get_user_config_from_file()
 
     if app_token is False:
         return False
@@ -138,9 +136,8 @@ def get_dropbox_object():
     return dbx
 
 
-def upload_dbx():
-    """upload music files to dropbox
-
+def upload_to_dropbox():
+    """
     This function uploads songs, whose path is available in the file
     "added.tmp".
 
@@ -183,7 +180,7 @@ def upload_dbx():
     return True
 
 
-def download_dbx(download):
+def download_from_dropbox(download):
     """download music files from dropbox
 
     This function downloads your songs from dropbox.
@@ -206,7 +203,7 @@ def download_dbx(download):
               download)
         return False
 
-    print("Following songs are available to download.")
+    print("\n\033[1;33mFollowing songs are available to download:\033[0m\n")
     subprocess.call(['cat', downloadable_songs])
 
     if ask_to_proceed("downloading") is False:
@@ -255,7 +252,10 @@ def ask_to_proceed(reason=""):
 
     choice = ""
     while choice not in ('y', 'Y', 'n', 'N'):
-        choice = input("Would you like to proceed with %s (y/n)?: " % reason)
+        choice = input(
+            "\n\033[1;32mWould you like to proceed with %s (y/n)?:\033[0m " %
+            reason
+        )
         if choice in ('y', 'Y'):
             return True
         elif choice in ('n', 'N'):
@@ -269,16 +269,17 @@ def ask_to_proceed(reason=""):
 @click.option('--config', '-c',  nargs=2, type=str,
               help="To set API token: "
               "--config dropbox.key 'token'")
-@click.option('--download', '-d', help="Download all you songs back.\n")
+@click.option('--download', '-d',
+              help="To download all your songs back: --download all\n")
 def main(dirs, config, download):
-    if config and update_config(config):
+    if config and update_user_config_in_file(config):
         print("Configured successfully.")
     # gen_index(dirs) == 0, if songs are available to upload.
-    elif dirs and gen_index(dirs) == 0:
-        if upload_dbx():
+    elif dirs and find_new_songs(dirs):
+        if upload_to_dropbox():
             print("\nSongs uploaded successfully.")
     elif download:
-        if download_dbx(download):
+        if download_from_dropbox(download):
             print("\nSongs downloaded successfully.")
     else:
         exit(1)

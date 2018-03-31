@@ -32,12 +32,12 @@
         },
         "eyed3": {
             "hashes": [
-                "sha256:0789781867edbf342b489e37c458c97c243366e5310bcfe7ebc3e3b1c0256769",
-                "sha256:9a8f334c640813647062aaa46c52d65641bec6f7d7e73e51441c95d3d93c3f43",
-                "sha256:ef52940058602a856f4358b1fe02eda145c918ef28d49678ea3127992bc8f7ed"
+                "sha256:1dd13bd3c4a4d8e48fb2ba0b2dbb9667d4f53328b9151aa822a936f772214206",
+                "sha256:88cae3b897640a9522d8ceae2097fd3ff3fd7cb9eb5fd153d27f8bc8d9d067a5",
+                "sha256:adfd94f149e5cb914bcb29e63416568360768809eafe0696b3980bf453417d66"
             ],
             "index": "pypi",
-            "version": "==0.8.4"
+            "version": "==0.8.5"
         },
         "idna": {
             "hashes": [

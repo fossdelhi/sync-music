@@ -179,7 +179,7 @@ def get_the_song(artist_and_song):
     return song_data
 
 
-def set_data(SONG_NAME_FILE="index", DEBUG=0):
+def set_data(SONG_NAME_FILE="index", DEBUG=False):
     """
     Sets the metadata to the song files, using eyed3 module
 
@@ -217,12 +217,12 @@ def set_data(SONG_NAME_FILE="index", DEBUG=0):
                 audio_file.tag.track_num = song_data["Track Number"]
                 if song_data["Image Link"]:
                     req = requests.get(song_data["Image Link"])
-                    audio_file.tag.images.set(3, req.content, 'jpg')
+                    audio_file.tag.images.set(3, req.content, 'jpg', song_data["Album Name"])
                     # 0 For other Image, 1 for Icon, 2 for Other Icon, 3 for
-                    # front conver, 4 for Back cover
+                    # front cover, 4 for Back cover
                 if song_data["Icon Link"]:
                     req = requests.get(song_data["Icon Link"])
-                    audio_file.tag.images.set(1, req.content, 'jpg')
+                    audio_file.tag.images.set(1, req.content, 'jpg', song_data["Name Of Song"])
                 audio_file.tag.save()
 
                 print('Saved details for : {}'.format(

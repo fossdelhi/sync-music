@@ -44,7 +44,10 @@ Make sure that the path to directories you give either starts with a dot ```.```
 
 #### To download
 Following command will download all your uploaded songs to ```~/Music/```.
-```$ sync-music --download all```
+
+```
+$ sync-music --download all
+```
 
 #### Regular refresh
 Refreshing sync-music makes sure that you don't miss your newly added songs to sync with dropbox. Also, if you accidently deleted any of your mp3 file, then refreshing will prompt you to bring them back if you want.
@@ -61,7 +64,7 @@ This application supports unit testing with ```Unittest```.
 There are following 3 aspects for which you may run test cases:
 (run these tests from application directory)
 
-1. To test songs Index generation ```$ python3 -m tests.test_index_generation```
+1. To test songs Index generation ```$ python3 -m tests.test_generate_temp_files```
 2. To test reading/writing configurations ```$ python3 -m tests.test_config```
 3. To test dropbox api call ```$ python3 -m tests.test_dropbox_api```
 

@@ -30,7 +30,9 @@ def find_new_songs(dirs):
         return False
 
     # calling bash scirpt with given directories as arguments.
-    script_path = os.path.expanduser('~/.sync-music/scripts/generate_index.sh')
+    script_path = os.path.expanduser(
+        '~/.sync-music/scripts/generate_temp_files.sh'
+    )
     call_script = list(dirs)
     call_script.insert(0, script_path)
 

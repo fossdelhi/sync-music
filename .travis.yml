@@ -12,11 +12,12 @@ install:
   - sudo apt-get install shellcheck
   - pip install flake8
 
-script:
+before_script:
   - chmod +x setup.sh
   - . ./setup.sh
-  - flake8 ./src/*.py
-  - flake8 ./tests/*.py
+
+script:
+  - flake8 .
   - shellcheck ./src/*.sh
-  - python3 -m tests.test_index_generation
+  - python3 -m tests.test_generate_temp_files
   - python3 -m tests.test_config

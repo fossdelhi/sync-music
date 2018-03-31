@@ -27,3 +27,5 @@ A file to keep a log of changes made in this project.
     * Updated setup.sh with pipenv installation.
     * Improved README.md: more user friendy + added download songs option.
     * Removed dependency of "tests/project.py".
+* [2018-04-01]
+    * Improved code readability and renamed files "generate_index.sh" and test_index_generation.py" to "generate_temp_files.sh" and "test_generate_temp_files.py"

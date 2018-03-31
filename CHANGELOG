@@ -26,3 +26,4 @@ A file to keep a log of changes made in this project.
     * Simplified .travis.yml: removed unnecessary commands.
     * Updated setup.sh with pipenv installation.
     * Improved README.md: more user friendy + added download songs option.
+    * Removed dependency of "tests/project.py".

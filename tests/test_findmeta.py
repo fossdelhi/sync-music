@@ -41,7 +41,7 @@ class testFindmetaMethods(unittest.TestCase):
     def test_get_track_info(self):
         track = findmeta.get_track_info("2JzZzZUQj3Qff7wapcbKjc")
         self.assertEqual(
-            track["Name Of Song"],
+            track["name"],
             "See You Again (feat. Charlie Puth)"
         )
 

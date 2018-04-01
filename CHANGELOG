@@ -10,6 +10,7 @@ Added
 - Seperate function to get the song name and artist from
   various combinations and confirm from spotify database
 - Song without artist name support
+- Lyrics Feature
 
 [0.1.0] - 2018-03-20
 Added

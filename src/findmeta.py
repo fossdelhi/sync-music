@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from authorize import spotify
-
+import lyricwikia
 
 def get_tracks(search_string=None):
     """
@@ -155,7 +155,7 @@ def get_track_info(track_id):
             if image["height"] > max_icon_size:
                 max_icon_size = image["height"]
                 icon_link = image["url"]
-    track = {"Name Of Song": name,
+        track = {"name": name,
              "Artist(s)": artists_names,
              "Album Artist(s)": album_artists,
              "Album Type": album_type,
@@ -166,6 +166,20 @@ def get_track_info(track_id):
              "Image Link": image_link,
              "Icon Link": icon_link
              }
+
+    for artist in artists_names.split(', '): 
+        """
+        Checks for lyrics with song name and artist names
+        combination until one is found.
+        """
+        try:
+            lyrics = lyricwikia.get_lyrics(artist, name)
+            track['lyrics'] = lyrics
+            break
+        except lyricwikia.LyricsNotFound:
+            pass
+
+
     return track
 
 
@@ -190,6 +204,9 @@ def print_dictionary(d, start_pos=0, end_pos=2):
             if len(d) != 1:  # Skip item number for single track dictionary
                 print("Item no.: {}".format(i + 1))
             for key, value in d[i].items():
+                if type(value) is str and len(value) > 79:
+                    value = value[:40]
+                    value = value + '...'
                 print("{0}: {1}".format(key, value))
             print()
 
@@ -204,6 +221,9 @@ def print_dictionary(d, start_pos=0, end_pos=2):
     elif type(d) is dict:
         print()
         for key, value in d.items():
+            if type(value) is str and len(value) > 79:
+                    value = value[:40]
+                    value = value + '...'
             print("{0}: {1}".format(key, value))
         print()
         return 1

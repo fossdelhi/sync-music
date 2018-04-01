@@ -1,10 +1,14 @@
 import eyed3
 import requests
-
 try:
     import findmeta
 except ModuleNotFoundError:
     from . import findmeta
+"""try:
+    import findmeta
+except ModuleNotFoundError:
+    from . import findmeta
+"""
 
 def split_by_first_occurence(string, character):
     """
@@ -213,20 +217,27 @@ def set_data(SONG_NAME_FILE="index", DEBUG=False):
                     audio_file.tag.artist = song_data["Artist(s)"]
                 audio_file.tag.album = song_data["Album Name"]
                 audio_file.tag.album_artist = song_data["Album Artist(s)"]
-                audio_file.tag.title = song_data["Name Of Song"]
+                audio_file.tag.title = song_data["name"]
                 audio_file.tag.track_num = song_data["Track Number"]
                 if song_data["Image Link"]:
                     req = requests.get(song_data["Image Link"])
-                    audio_file.tag.images.set(3, req.content, 'jpg', song_data["Album Name"])
+                    audio_file.tag.images.set(
+                        3, req.content, 'jpg', song_data["Album Name"]
+                    )
                     # 0 For other Image, 1 for Icon, 2 for Other Icon, 3 for
                     # front cover, 4 for Back cover
                 if song_data["Icon Link"]:
                     req = requests.get(song_data["Icon Link"])
-                    audio_file.tag.images.set(1, req.content, 'jpg', song_data["Name Of Song"])
+                    audio_file.tag.images.set(
+                        1, req.content, 'jpg', song_data["name"]
+                    )
+                if "lyrics" in song_data.keys():
+                    audio_file.tag.lyrics.set(song_data["lyrics"], song_data["name"])
+
                 audio_file.tag.save()
 
                 print('Saved details for : {}'.format(
-                    song_data['Name Of Song']
+                    song_data['name']
                 ))
             else:
                 print("{}\n Couldn't be found".format(song_files[i]))

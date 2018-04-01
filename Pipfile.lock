@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "49bd91f37ac541439056b7b43278e5dca68ee351e59f9cdd0e623ee5b4a2c1d7"
+            "sha256": "becb753ee178394db40f910a50e42dd955a631a406cb4ac06039b4983bb66213"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,14 @@
         ]
     },
     "default": {
+        "beautifulsoup4": {
+            "hashes": [
+                "sha256:11a9a27b7d3bddc6d86f59fb76afb70e921a25ac2d6cc55b40d072bd68435a76",
+                "sha256:7015e76bf32f1f574636c4288399a6de66ce08fb7b2457f628a8d70c0fbabb11",
+                "sha256:808b6ac932dccb0a4126558f7dfdcf41710dd44a4ef497a0bb59a77f9f078e89"
+            ],
+            "version": "==4.6.0"
+        },
         "certifi": {
             "hashes": [
                 "sha256:14131608ad2fd56836d33a71ee60fa1c82bc9d2c8d98b7bdbc631fe1b3cd1296",
@@ -45,6 +53,13 @@
                 "sha256:8c7309c718f94b3a625cb648ace320157ad16ff131ae0af362c9f21b80ef6ec4"
             ],
             "version": "==2.6"
+        },
+        "lyricwikia": {
+            "hashes": [
+                "sha256:7e08836b74a4a209a870331e620c3a40fef4bd5fc73e88e87c7795fbd6e44569"
+            ],
+            "index": "pypi",
+            "version": "==0.1.9"
         },
         "pathlib": {
             "hashes": [

@@ -1,14 +1,12 @@
 import eyed3
 import requests
-try:
-    import findmeta
-except ModuleNotFoundError:
-    from . import findmeta
+from src import findmeta
 """try:
     import findmeta
 except ModuleNotFoundError:
     from . import findmeta
 """
+
 
 def split_by_first_occurence(string, character):
     """

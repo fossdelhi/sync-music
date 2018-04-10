@@ -1,5 +1,5 @@
 import unittest
-from src import attachmeta
+import attachmeta
 
 
 class testAttachmetaMethods(unittest.TestCase):

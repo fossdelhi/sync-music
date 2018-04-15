@@ -1,3 +1,5 @@
+# flake8: noqa
+
 """
 This file contains dictionaries of data in the format required by the
 functions in findmeta. Attachmeta uses only get_tracks function from

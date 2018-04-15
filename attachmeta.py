@@ -1,11 +1,6 @@
 import eyed3
 import requests
 from src import findmeta
-"""try:
-    import findmeta
-except ModuleNotFoundError:
-    from . import findmeta
-"""
 
 
 def split_by_first_occurence(string, character):

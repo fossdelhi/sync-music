@@ -5,6 +5,8 @@ be documented in this file.
 
 ## [unreleased]
 ##Added
+### 2018-04-16
+- Support for mock API 
 ### 2018-04-10
 - Daily dates to CHANGELOG
 

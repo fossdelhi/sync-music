@@ -2,9 +2,10 @@
 from .authorize import spotify
 import lyricwikia
 
+
 def get_tracks(search_string=None):
     """
-    Get mulitple maching tracks along with their details,
+    Get mulitple matching tracks along with their details,
     details like artist, album, and so on.
 
     :param search_string: Name of track to be searched
@@ -156,18 +157,18 @@ def get_track_info(track_id):
                 max_icon_size = image["height"]
                 icon_link = image["url"]
         track = {"name": name,
-             "Artist(s)": artists_names,
-             "Album Artist(s)": album_artists,
-             "Album Type": album_type,
-             "Album Name": album_name,
-             "Album Release": album_release,
-             "Track Number": album_track_number,
-             "Track Duration (ms)": track_duration,
-             "Image Link": image_link,
-             "Icon Link": icon_link
-             }
+                 "Artist(s)": artists_names,
+                 "Album Artist(s)": album_artists,
+                 "Album Type": album_type,
+                 "Album Name": album_name,
+                 "Album Release": album_release,
+                 "Track Number": album_track_number,
+                 "Track Duration (ms)": track_duration,
+                 "Image Link": image_link,
+                 "Icon Link": icon_link
+                 }
 
-    for artist in artists_names.split(', '): 
+    for artist in artists_names.split(', '):
         """
         Checks for lyrics with song name and artist names
         combination until one is found.
@@ -178,7 +179,6 @@ def get_track_info(track_id):
             break
         except lyricwikia.LyricsNotFound:
             pass
-
 
     return track
 

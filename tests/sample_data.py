@@ -1,3 +1,9 @@
+"""
+This file contains dictionaries of data in the format required by the
+functions in findmeta. Attachmeta uses only get_tracks function from
+findmeta, hence no separate file is needed.
+"""
+
 of_get_tracks = {
     "tracks": {
         "items": [

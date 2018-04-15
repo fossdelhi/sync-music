@@ -225,7 +225,9 @@ def set_data(SONG_NAME_FILE="index", DEBUG=False):
                         1, req.content, 'jpg', song_data["name"]
                     )
                 if "lyrics" in song_data.keys():
-                    audio_file.tag.lyrics.set(song_data["lyrics"], song_data["name"])
+                    audio_file.tag.lyrics.set(
+                        song_data["lyrics"], song_data["name"]
+                    )
 
                 audio_file.tag.save()
 

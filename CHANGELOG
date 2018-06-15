@@ -74,4 +74,4 @@ A file to keep a log of changes made in this project.
 
 #####Removed
 * [2018-03-20]
-*Printing functionality from metadata functions, they now return only data 
+    *Printing functionality from metadata functions, they now return only data 

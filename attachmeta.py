@@ -4,6 +4,7 @@ from src import findmeta
 
 SONG_FILE_DEFAULT_LOCATION = "~/.sync-music/tmpfiles/added.tmp"
 
+
 def split_by_first_occurence(string, character):
     """
     Split a function by first occurence of a character or a substring,

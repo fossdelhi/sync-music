@@ -10,11 +10,15 @@ pipenv install .
 
 ## Usage 
 Type : 
-`python3 src/attachmeta.py` 
+`python3 attachmeta.py` 
 This requires an `index` file to contain address of songs, to whom metadata is to be added 
 The path should be an absolute path. 
 In case the song name couldn't be deduced from the filename, and error will be displayed. 
+Keep your client_id and client_secret in a .env file. As you open the virtual environment
+the variables will be loaded.
 
 ## Testing 
 To test, simply do: 
 `python3 -m unittest discover tests` 
+
+The tests use mocked APIs and hence can be run without an internet connection

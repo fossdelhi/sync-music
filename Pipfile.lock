@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "becb753ee178394db40f910a50e42dd955a631a406cb4ac06039b4983bb66213"
+            "sha256": "ecc8023b9b505a7653906904cca889ddc8dc401bc91c0d769a65d5c601127b74"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -29,6 +29,7 @@
                 "sha256:14131608ad2fd56836d33a71ee60fa1c82bc9d2c8d98b7bdbc631fe1b3cd1296",
                 "sha256:edbc3f203427eef571f79a7692bb160a2b0f7ccaa31953e99bd17e307cf63f7d"
             ],
+            "index": "pypi",
             "version": "==2018.1.18"
         },
         "chardet": {
@@ -36,22 +37,41 @@
                 "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae",
                 "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
             ],
+            "index": "pypi",
             "version": "==3.0.4"
+        },
+        "click": {
+            "hashes": [
+                "sha256:29f99fc6125fbc931b758dc053b3114e55c77a6e4c6c3a2674a2dc986016381d",
+                "sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b"
+            ],
+            "index": "pypi",
+            "version": "==6.7"
+        },
+        "dropbox": {
+            "hashes": [
+                "sha256:e7eeac47f35e73b34023b7a3089380e74bacd0cce4b57e1e347539dfb53681d2",
+                "sha256:f14d1bc8a5ab293c4df04a690e54d503b1885acc246f6af4fe9207a22ed2f0eb",
+                "sha256:fbfe84b9436eca37a78802508c0d7ce3200ad20e621ce73262edba6ae371ad3d"
+            ],
+            "index": "pypi",
+            "version": "==8.9.0"
         },
         "eyed3": {
             "hashes": [
-                "sha256:1dd13bd3c4a4d8e48fb2ba0b2dbb9667d4f53328b9151aa822a936f772214206",
-                "sha256:88cae3b897640a9522d8ceae2097fd3ff3fd7cb9eb5fd153d27f8bc8d9d067a5",
-                "sha256:adfd94f149e5cb914bcb29e63416568360768809eafe0696b3980bf453417d66"
+                "sha256:1eb93a51b9735dcb10403bb96679396ce6236f969b6c441ac3a73aa82db8900a",
+                "sha256:5b1c4548997a61f587df46e5896eabc77287d2fc655afe19d1b83f46284120ea",
+                "sha256:ef924eb2e8fffd7c7e3bd4c94dafad4a3b9047fe2dcb76d5dd7d9c37a1f1f8bb"
             ],
             "index": "pypi",
-            "version": "==0.8.5"
+            "version": "==0.8.7"
         },
         "idna": {
             "hashes": [
                 "sha256:2c6a5de3089009e3da7c5dde64a141dbc8551d5b7f6cf4ed7c2568d0cc520a8f",
                 "sha256:8c7309c718f94b3a625cb648ace320157ad16ff131ae0af362c9f21b80ef6ec4"
             ],
+            "index": "pypi",
             "version": "==2.6"
         },
         "lyricwikia": {
@@ -87,6 +107,7 @@
                 "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
                 "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
             ],
+            "index": "pypi",
             "version": "==1.11.0"
         },
         "spotipy": {
@@ -101,6 +122,7 @@
                 "sha256:06330f386d6e4b195fbfc736b297f58c5a892e4440e54d294d7004e3a9bbea1b",
                 "sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f"
             ],
+            "index": "pypi",
             "version": "==1.22"
         }
     },

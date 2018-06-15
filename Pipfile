@@ -1,22 +1,22 @@
 [[source]]
-
-url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
-
-
-[packages]
-
-spotipy = "*"
-"eyed3" = "*"
-requests = "*"
-lyricwikia = "*"
-
+url = "https://pypi.python.org/simple"
 
 [dev-packages]
 
-
-
 [requires]
-
 python_version = "3"
+
+[packages]
+certifi = "==2018.1.18"
+chardet = "==3.0.4"
+click = "*"
+dropbox = "*"
+idna = "==2.6"
+requests = "==2.18.4"
+six = "==1.11.0"
+"urllib3" = "==1.22"
+spotipy = "*"
+"eyed3" = "*"
+lyricwikia = "*"

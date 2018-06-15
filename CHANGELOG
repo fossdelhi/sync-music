@@ -1,43 +1,77 @@
-# Changelog
+### ChangeLog
 
-This is the changelog of the metadata manager. All notable changes will 
-be documented in this file. 
+A file to keep a log of changes made in this project.
 
-## [unreleased]
-##Added
-### 2018-04-16
-- Support for mock API 
-### 2018-04-10
-- Daily dates to CHANGELOG
+--------------------
+### Syncing
+==========================
+--------------------
+#### Version [0.1.0] - 2018-03-19
+==========================
+* [2018-03-19]
+    * Added first version of python script to upload songs on dropbox.
+* [2018-03-20]
+    * Added initial version of sync-music.py.
+    * Added shell script to fetch songs address.
+* [2018-03-21]
+    * Added setup.sh file, to setup a working copy of the application.
+* [2018-03-22]
+    * Added feature of adding dropbox configuration (API token) through CLI.
+* [2018-03-23]
+    * Integrated python script as a function to upload songs on dropbox.
+* [2018-03-27]
+    * Added feature to download songs from dropbox
+--------------------
+#### Version [0.1.1] - 2018-03-31
+==========================
+* [2018-03-13]
+    * Added pipenv compatiblity to avoid global installations.
+    * Simplified .travis.yml: removed unnecessary commands.
+    * Updated setup.sh with pipenv installation.
+    * Improved README.md: more user friendy + added download songs option.
+    * Removed dependency of "tests/project.py".
+* [2018-04-01]
+    * Improved code readability and renamed files "generate_index.sh" and test_index_generation.py" to "generate_temp_files.sh" and "test_generate_temp_files.py"
 
-### 2018-03-23
-- Album cover and icon setter
+--------------------
+### Metadata Manager
+==========================
 
-### 2018-03-24
-- More file name support. Artist can now appear on either side of a -
-- Seperate function to get the song name and artist from
-  various combinations and confirm from spotify database
-- Song without artist name support
+--------------------
+#### [unreleased]
+==========================
+#####Added
+* [2018-04-16]
+    *Support for mock API 
+* [2018-04-10]
+    *Daily dates to CHANGELOG
+* [2018-03-23]
+    *Album cover and icon setter
+* [2018-03-24]
+    *More file name support. Artist can now appear on either side of a -
+    *Seperate function to get the song name and artist from
+     various combinations and confirm from spotify database
+    *Song without artist name support
+* [2018-04-02]
+    *Lyrics Feature
 
-### 2018-04-02
-- Lyrics Feature
+#####Fixed
+* [2018-04-10]
+    *Project structure, attachmeta now belongs to project root.
+    
+--------------------
+#### [0.1.0] - 2018-03-20
+==========================
+#####Added
+* [2018-03-16]
+    *Metadata fetching using spotify API
+    *Metadata attaching using eyeD3 module
+    *Support for detecting artist and songs name in file name
+    *Support for reading songs path from *index* file
 
-##Fixed
-### 2018-04-10
-- Project structure, attachmeta now belongs to project root.
+* [2018-03-23]
+    *Test cases for the metadata fetcher
 
-
-## _[0.1.0] - 2018-03-20_
-##Added
-### 2018-03-16
-- Metadata fetching using spotify API
-- Metadata attaching using eyeD3 module
-- Support for detecting artist and songs name in file name
-- Support for reading songs path from *index* file
-
-### 2018-03-23
-- Test cases for the metadata fetcher
-
-##Removed
-### 2018-03-20
-- Printing functionality from metadata functions, they now return only data
+#####Removed
+* [2018-03-20]
+    *Printing functionality from metadata functions, they now return only data 

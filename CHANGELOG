@@ -3,6 +3,9 @@
 A file to keep a log of changes made in this project.
 
 --------------------
+### Syncing
+==========================
+--------------------
 #### Version [0.1.0] - 2018-03-19
 ==========================
 * [2018-03-19]
@@ -29,3 +32,46 @@ A file to keep a log of changes made in this project.
     * Removed dependency of "tests/project.py".
 * [2018-04-01]
     * Improved code readability and renamed files "generate_index.sh" and test_index_generation.py" to "generate_temp_files.sh" and "test_generate_temp_files.py"
+
+--------------------
+### Metadata Manager
+==========================
+
+--------------------
+#### [unreleased]
+==========================
+#####Added
+* [2018-04-16]
+    *Support for mock API 
+* [2018-04-10]
+    *Daily dates to CHANGELOG
+* [2018-03-23]
+    *Album cover and icon setter
+* [2018-03-24]
+    *More file name support. Artist can now appear on either side of a -
+    *Seperate function to get the song name and artist from
+     various combinations and confirm from spotify database
+    *Song without artist name support
+* [2018-04-02]
+    *Lyrics Feature
+
+#####Fixed
+* [2018-04-10]
+    *Project structure, attachmeta now belongs to project root.
+    
+--------------------
+#### [0.1.0] - 2018-03-20
+==========================
+#####Added
+* [2018-03-16]
+    *Metadata fetching using spotify API
+    *Metadata attaching using eyeD3 module
+    *Support for detecting artist and songs name in file name
+    *Support for reading songs path from *index* file
+
+* [2018-03-23]
+    *Test cases for the metadata fetcher
+
+#####Removed
+* [2018-03-20]
+*Printing functionality from metadata functions, they now return only data 

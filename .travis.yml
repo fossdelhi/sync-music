@@ -3,7 +3,7 @@ language:
   - bash
 
 python:
-  - 3.5
+  - 3.6
 
 os:
   - linux
@@ -19,5 +19,6 @@ before_script:
 script:
   - flake8 .
   - shellcheck ./src/*.sh
+  - python3 -m  unittest discover tests
   - python3 -m tests.test_generate_temp_files
   - python3 -m tests.test_config

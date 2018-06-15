@@ -8,6 +8,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.pythonrc
+*.pyc
 env/
 build/
 develop-eggs/
@@ -99,3 +101,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# vim temporary files
+*.swp

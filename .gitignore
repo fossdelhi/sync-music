@@ -7,6 +7,4 @@ music/
 CHANGELOG.HTML
 index
 src/index
-src/init2.py
-tests/__init__.py
 *.swp

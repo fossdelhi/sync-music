@@ -273,8 +273,10 @@ def ask_to_proceed(reason=""):
               help="To set API token: "
               "--config dropbox.key 'token'")
 @click.option('--download', '-d',
-              help="To download all your songs back: --download all\n")
-def main(dirs, config, download):
+              help="To download all your songs back: --download all")
+@click.option('--meta', '-m', is_flag=True,
+              help="To download metadata only, no upload\n")
+def main(dirs, config, download, meta):
     if config and update_user_config_in_file(config):
         print("Configured successfully.")
     # gen_index(dirs) == 0, if songs are available to upload.
@@ -284,6 +286,10 @@ def main(dirs, config, download):
     elif download:
         if download_from_dropbox(download):
             print("\nSongs downloaded successfully.")
+    elif meta:
+        print("Attaching Metadata only")
+        songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
+        attachmeta.set_data(songs_file)
     else:
         exit(1)
     exit(0)

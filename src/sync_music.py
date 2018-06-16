@@ -159,9 +159,9 @@ def upload_to_dropbox():
     # added.tmp: file having paths of newly added songs to be uploaded.
     songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
     Index_file = os.path.expanduser('~/.sync-music/tmpfiles/Index')
-    print('Attaching metadata')
+    print('Attaching metadata:')
     attachmeta.set_data(songs_file)
-    print('Uploading:')
+    print('\nUploading:')
     with open(songs_file, 'r') as f:
         for song in f:
             song = song.rstrip('\n')
@@ -176,7 +176,8 @@ def upload_to_dropbox():
                 with open(Index_file, 'a') as index:
                     index.write(song)
                     index.write('\n')
-                print(f"[\u2713] {song_name}")
+                tick_mark = '\u2713'
+                print(f"[\033[0;32m{tick_mark}\033[0m] {song_name}")
             except dropbox.exceptions.AuthError as err:
                 print("**AuthError: ", err)
                 return False
@@ -210,7 +211,9 @@ def download_from_dropbox(download):
         return False
 
     print("\n\033[1;33mFollowing songs are available to download:\033[0m\n")
-    subprocess.call(['cat', downloadable_songs])
+    with open(downloadable_songs, 'r') as file:
+        for absolute_path in file:
+           print(f"{click.format_filename(absolute_path, shorten=True)}")
 
     if ask_to_proceed("downloading") is False:
         return False

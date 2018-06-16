@@ -18,5 +18,5 @@ chmod +x ./src/generate_temp_files.sh
 chmod +x ./src/sync_music.py
 
 echo -e "\nCreating required symlinks..."
-ln ./src/generate_temp_files.sh ~/.sync-music/scripts/generate_temp_files.sh
+ln -s ./src/generate_temp_files.sh ~/.sync-music/scripts/generate_temp_files.sh 
 sudo ln ./src/sync_music.py /usr/bin/sync-music

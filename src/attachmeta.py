@@ -206,6 +206,9 @@ def set_data(song_name_file='index', DEBUG=False):
         if DEBUG != 1:
             audio_file = eyed3.load(song_paths[i])
             if audio_file:
+                tick_mark = '\u2713'
+                print(f"[*] {song_data['name']}", end='\r')
+                
                 try:
                     audio_file.tag.artist = song_data["Artist(s)"]
                 except AttributeError:
@@ -235,9 +238,8 @@ def set_data(song_name_file='index', DEBUG=False):
 
                 audio_file.tag.save()
 
-                print('Saved details for : {}'.format(
-                    song_data['name']
-                ))
+                print(f"[\033[0;32m{tick_mark}\033[0m] {song_data['name']}")
+                
             else:
                 print("{}\n Couldn't be found".format(song_files[i]))
         else:

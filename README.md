@@ -60,6 +60,16 @@ $ sync-music --refresh
 ```
 **Regular refresh and selective downloading are not applicable for the current version.**
 
+### Attaching metadata only
+
+You can attach meta data to songs without uploading them using the `-m` or `--meta` option. You need to specify the path of the file containing absolute path of songs. For example:
+
+```
+$ sync-music -m abc
+```
+
+This will attach metadata to all the songs whose absolute paths are available in the file named `abc`.
+
 ### Testing
 This application supports unit testing with ```Unittest```.
 

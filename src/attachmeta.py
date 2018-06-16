@@ -1,6 +1,6 @@
 import eyed3
 import requests
-from src import findmeta
+import findmeta
 
 
 def split_by_first_occurence(string, character):

@@ -1,6 +1,6 @@
 from unittest.mock import patch
 import unittest
-import attachmeta
+from src import findmeta, attachmeta
 from tests import sample_data
 
 

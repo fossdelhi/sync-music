@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-from .authorize import spotify
 import lyricwikia
-
+from authorize import spotify
 
 def get_tracks(search_string=None):
     """

@@ -161,12 +161,14 @@ def upload_to_dropbox():
     Index_file = os.path.expanduser('~/.sync-music/tmpfiles/Index')
     print('Attaching metadata')
     attachmeta.set_data(songs_file)
+    print('Uploading:')
     with open(songs_file, 'r') as f:
         for song in f:
             song = song.rstrip('\n')
 
             song_name = (song.split('/'))[-1]
             try:
+                print(f"[*] {song_name}", end='\r') 
                 with open(song, 'rb') as mp3file:
                     dbx.files_upload(bytes(mp3file.read()), '/'+song_name)
                 # main "Index" is getting updated with songs that are
@@ -174,6 +176,7 @@ def upload_to_dropbox():
                 with open(Index_file, 'a') as index:
                     index.write(song)
                     index.write('\n')
+                print(f"[\u2713] {song_name}")
             except dropbox.exceptions.AuthError as err:
                 print("**AuthError: ", err)
                 return False

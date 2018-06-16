@@ -274,7 +274,7 @@ def ask_to_proceed(reason=""):
               "--config dropbox.key 'token'")
 @click.option('--download', '-d',
               help="To download all your songs back: --download all")
-@click.option('--meta', '-m', is_flag=True,
+@click.option('--meta', '-m', type=click.Path(exists=True, resolve_path=True),
               help="To download metadata only, no upload\n")
 def main(dirs, config, download, meta):
     if config and update_user_config_in_file(config):
@@ -287,9 +287,9 @@ def main(dirs, config, download, meta):
         if download_from_dropbox(download):
             print("\nSongs downloaded successfully.")
     elif meta:
-        print("Attaching Metadata only")
-        songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
-        attachmeta.set_data(songs_file)
+        print("Attaching Metadata only to the songs in file: "
+               f"{click.format_filename(meta, shorten=True)}")
+        attachmeta.set_data(meta)
     else:
         exit(1)
     exit(0)

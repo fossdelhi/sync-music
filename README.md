@@ -77,7 +77,6 @@ There are following 3 aspects for which you may run test cases:
 To run all the tests with single command use:
 ```$ python3 -m unittest discover tests```
 
-*metadata manager now supports mock APIs for offline testing*
 
 ### Important files
 Following files are created when you run ```setup.sh```. Their importance and usage is as follows:

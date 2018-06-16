@@ -3,6 +3,8 @@ import requests
 import findmeta
 
 
+# To avoid the lame tag CRC check warning
+eyed3.log.setLevel("ERROR")
 def split_by_first_occurence(string, character):
     """
     Split a function by first occurence of a character or a substring,
@@ -176,7 +178,7 @@ def get_the_song(artist_and_song):
     return song_data
 
 
-def set_data(song_name_file='index', DEBUG=False):
+def set_data(song_name_file='index', DEBUG=True):
     """
     Sets the metadata to the song files, using eyed3 module
     If this function is called using main, then it searches for a file

@@ -5,7 +5,7 @@ import os
 import json
 import dropbox
 import requests
-
+import attachmeta
 
 def find_new_songs(dirs):
     """
@@ -159,7 +159,8 @@ def upload_to_dropbox():
     # added.tmp: file having paths of newly added songs to be uploaded.
     songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
     Index_file = os.path.expanduser('~/.sync-music/tmpfiles/Index')
-
+    print('Attaching metadata')
+    attachmeta.set_data(songs_file)
     with open(songs_file, 'r') as f:
         for song in f:
             song = song.rstrip('\n')

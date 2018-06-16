@@ -2,8 +2,6 @@ import eyed3
 import requests
 from src import findmeta
 
-SONG_FILE_DEFAULT_LOCATION = "~/.sync-music/tmpfiles/added.tmp"
-
 
 def split_by_first_occurence(string, character):
     """
@@ -178,9 +176,11 @@ def get_the_song(artist_and_song):
     return song_data
 
 
-def set_data(song_name_file=SONG_FILE_DEFAULT_LOCATION, DEBUG=False):
+def set_data(song_name_file='index', DEBUG=False):
     """
     Sets the metadata to the song files, using eyed3 module
+    If this function is called using main, then it searches for a file
+    named index for addresses of the songs.
 
     :param song_name_file: File from which song path are to be fetched
     :param DEBUG: Set this to 1 to print results to screen, rather than adding

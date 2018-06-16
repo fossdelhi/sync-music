@@ -59,8 +59,8 @@ $ sync-music --refresh
 ```
 **Regular refresh and selective downloading are not applicable for the current version.**
 
-To make the spotify metadata fetcher work, you need client_id and client_secret keys from spotify developer account.
-Keep your client_id and client_secret in a .env file. As you open the virtual environment using pipenv shell, the variables will be loaded.*
+*To make the spotify metadata fetcher work, you need client_id and client_secret keys from spotify developer account.
+Keep your client_id and client_secret in a .env file. As you open the virtual environment using pipenv shell, the variables will be loaded.
 
 ### Testing
 This application supports unit testing with ```Unittest```.

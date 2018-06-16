@@ -26,6 +26,7 @@ Generate your API token from dropbox developers console and configure with this 
 ```
 $ sync-music --config dropbox.key "API_token"
 ```
+Generate your client_id and client_secret from spotify developer website, and put them in a .env file in this directory. They will be autmatically loaded when the virtual environment in launched.
 
 Now sync-music is ready to sync your favorite songs.
 
@@ -58,9 +59,6 @@ Refreshing sync-music makes sure that you don't miss your newly added songs to s
 $ sync-music --refresh
 ```
 **Regular refresh and selective downloading are not applicable for the current version.**
-
-**Note**:To make the spotify metadata fetcher work, you need client_id and client_secret keys from spotify developer account.
-Keep your *client_id* and *client_secret* in a *.env* file. As you open the virtual environment using pipenv shell, the variables will be loaded.
 
 ### Testing
 This application supports unit testing with ```Unittest```.

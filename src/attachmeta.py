@@ -3,6 +3,8 @@ import requests
 import findmeta
 
 
+# To avoid the lame tag CRC check warning
+eyed3.log.setLevel("ERROR")
 def split_by_first_occurence(string, character):
     """
     Split a function by first occurence of a character or a substring,

@@ -67,8 +67,11 @@ diff -n "$1" "$2" | grep '^/' > "$HOME"/.sync-music/tmpfiles/added.tmp
 
 if [ -s "$HOME"/.sync-music/tmpfiles/added.tmp ]
 then
-    echo -e "\n\033[1;33mFollowing songs are newly found in the directory.:\033[0m\n."
-    cat '^/' "$HOME"/.sync-music/tmpfiles/added.tmp
+    echo -e "\n\033[1;33mFollowing songs are newly found in the directory.:\033[0m\n"
+    while read -r absolute_path || [[ -n "$absolute_path" ]]; do
+        echo $(basename "$absolute_path")
+    done < "$HOME"/.sync-music/tmpfiles/added.tmp 
+
     exit 0
 else
     echo -e "\033[1;36m\nNo new song is found to upload!\n"

@@ -159,7 +159,7 @@ def upload_to_dropbox():
     # added.tmp: file having paths of newly added songs to be uploaded.
     songs_file = os.path.expanduser('~/.sync-music/tmpfiles/added.tmp')
     Index_file = os.path.expanduser('~/.sync-music/tmpfiles/Index')
-    print('Attaching metadata')
+    print('Attaching metadata:')
     attachmeta.set_data(songs_file)
     print('\nUploading:')
     with open(songs_file, 'r') as f:
@@ -177,7 +177,7 @@ def upload_to_dropbox():
                     index.write(song)
                     index.write('\n')
                 tick_mark = '\u2713'
-                print(f"\033[0;32mF[{tick_mark}]\033[0m\ {song_name}")
+                print(f"[\033[0;32m{tick_mark}\033[0m] {song_name}")
             except dropbox.exceptions.AuthError as err:
                 print("**AuthError: ", err)
                 return False

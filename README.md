@@ -42,8 +42,6 @@ $ sync-music ~/complete/path/to/dir ~/other_dir
 ```
 
 This uploads the songs in the directory to your dropbox, and also attaches metadata to them before uploading.
-#### CAUTION
-Make sure that the path to directories you give either starts with a dot ```.``` like ```./Mymusic/``` (relative path from current working directory) or with home directory symbol ```~``` like ```~/Mymusic/classic/``` (complete path). Because, current version of the app won't be able to find directories if you would give their path as ```../../dir```.
 
 #### To download
 Following command will download all your uploaded songs to ```~/Music/```.

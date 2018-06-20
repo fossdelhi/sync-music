@@ -274,7 +274,8 @@ def ask_to_proceed(reason=""):
 
 
 @click.command()
-@click.argument('dirs', nargs=-1, required=False)
+@click.argument('dirs', nargs=-1, required=False,
+                type=click.Path(exists=True, dir_okay=True, resolve_path=True))
 @click.option('--config', '-c',  nargs=2, type=str,
               help="To set API token: "
               "--config dropbox.key 'token'")

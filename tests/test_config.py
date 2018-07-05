@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import unittest
 import os
-from src import sync_music
+import sync_music
 
 
 class TestConfigFile(unittest.TestCase):

@@ -3,7 +3,7 @@ import unittest
 import dropbox
 import os
 import requests
-from src import sync_music
+import sync_music
 
 
 class TestDropboxAPI(unittest.TestCase):

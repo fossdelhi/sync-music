@@ -1,4 +1,4 @@
-pip install -U pipenv --user
+pip install -U pipenv 
 pipenv install .
 
 echo -e "\nCreating directory structure..."

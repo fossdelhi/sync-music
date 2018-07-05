@@ -1,3 +1,10 @@
+.gitignore
+CHANGELOG.HTML
+index
+music/
+src/index
+tmp_music/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

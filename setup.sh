@@ -20,7 +20,7 @@ touch ~/.sync-music/config/keys.json
 
 echo -e "\nGiving executable permissions..."
 chmod +x ./src/generate_temp_files.sh
-chmod +x ./src/sync_music.py
+chmod +x ./sync_music.py
 
 echo -e "\nCreating required symlinks..."
 if [ ! -L ~/.sync-music/scripts/generate_temp_files.sh ]; then

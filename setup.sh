@@ -1,5 +1,5 @@
-#pip install -U pipenv --user
-#pipenv install .
+pip install -U pipenv --user
+pipenv install .
 
 echo -e "\nCreating directory structure..."
 if [ ! -d ~/.sync-music/tmpfiles ]; then

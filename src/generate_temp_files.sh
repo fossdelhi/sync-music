@@ -16,7 +16,7 @@ for i in "$@"
 do
     if [ ! -d "$i" ]
     then
-        echo -e "\033[1;31m\nERROR: $i is not a directory.\n\033[0m"
+        echo -e "\\033[1;31m\\nERROR: $i is not a directory.\\n\\033[0m"
         unset i
         exit 1
     fi
@@ -40,7 +40,7 @@ do
     then
         find "$i" -name '*.mp3' >> "$HOME"/.sync-music/tmpfiles/index.tmp
     else
-         echo -e "\033[0;36m\nERROR: Couldn't complete syncing! Directory isn't found!\n\033[0m"
+         echo -e "\\033[0;36m\\nERROR: Couldn't complete syncing! Directory isn't found!\\n\\033[0m"
          unset i
          exit 2
     fi
@@ -67,14 +67,14 @@ diff -n "$1" "$2" | grep '^/' > "$HOME"/.sync-music/tmpfiles/added.tmp
 
 if [ -s "$HOME"/.sync-music/tmpfiles/added.tmp ]
 then
-    echo -e "\n\033[1;33mFollowing songs are newly found in the directory.:\033[0m\n"
+    echo -e "\\n\\033[1;33mFollowing songs are newly found in the directory.:\\033[0m\\n"
     while read -r absolute_path || [[ -n "$absolute_path" ]]; do
-        echo $(basename "$absolute_path")
+        basename "$absolute_path"
     done < "$HOME"/.sync-music/tmpfiles/added.tmp 
 
     exit 0
 else
-    echo -e "\033[1;36m\nNo new song is found to upload!\n"
+    echo -e "\\033[1;36m\\nNo new song is found to upload!\\n"
     exit 3
 fi
 }

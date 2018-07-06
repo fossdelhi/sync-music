@@ -24,8 +24,11 @@ chmod +x ./sync_music.py
 
 echo -e "\nCreating required symlinks..."
 if [ ! -L ~/.sync-music/scripts/generate_temp_files.sh ]; then
-    ln -s ./src/generate_temp_files.sh ~/.sync-music/scripts/generate_temp_files.sh 
+    ln -s src/generate_temp_files.sh ~/.sync-music/scripts/generate_temp_files.sh 
 fi
-if [ ! -f $HOME/bin/sync-music ]; then 
-    ln -s ./src/sync_music.py $HOME/bin/sync-music
+if [ ! -d ~/bin/ ]; then
+    mkdir ~/bin/
+fi
+if [ ! -f ~/bin/sync-music ]; then 
+    ln -s ./sync_music.py ~/bin/sync-music
 fi

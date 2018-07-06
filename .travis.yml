@@ -20,3 +20,6 @@ script:
   - flake8 .
   - shellcheck ./src/*.sh
   - python3 -m  unittest discover tests
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

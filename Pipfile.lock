@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "08158c501f4f875e2d5b0e445d909ecd17b71ed00f34ac0a64f4cc15e5906516"
+            "sha256": "ecc8023b9b505a7653906904cca889ddc8dc401bc91c0d769a65d5c601127b74"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -60,7 +60,6 @@
         "eyed3": {
             "hashes": [
                 "sha256:1eb93a51b9735dcb10403bb96679396ce6236f969b6c441ac3a73aa82db8900a",
-                "sha256:5b1c4548997a61f587df46e5896eabc77287d2fc655afe19d1b83f46284120ea",
                 "sha256:ef924eb2e8fffd7c7e3bd4c94dafad4a3b9047fe2dcb76d5dd7d9c37a1f1f8bb"
             ],
             "index": "pypi",

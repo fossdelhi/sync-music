@@ -15,11 +15,12 @@ install:
 before_script:
   - chmod +x setup.sh
   - . ./setup.sh
+  - python3 -m pip install coverage
 
 script:
   - flake8 .
   - shellcheck ./src/*.sh
-  - python3 -m  unittest discover tests
+  - python3 -m coverage run --branch -m unittest discover tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

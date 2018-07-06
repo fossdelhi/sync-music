@@ -1,6 +1,6 @@
 from unittest.mock import patch
 import unittest
-import attachmeta
+from src import attachmeta
 from src import sample_data
 
 
@@ -8,7 +8,7 @@ class testAttachmetaMethods(unittest.TestCase):
     @classmethod
     def setUp(cls):
         cls.mock_search_results_patcher = patch(
-            'attachmeta.findmeta.spotify.search'
+            'src.attachmeta.findmeta.spotify.search'
         )
         cls.mock_search_results = cls.mock_search_results_patcher.start()
         cls.mock_search_results.return_value = sample_data.of_get_tracks

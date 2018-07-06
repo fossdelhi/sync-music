@@ -19,7 +19,7 @@ before_script:
 script:
   - flake8 .
   - shellcheck ./src/*.sh
-  - python3 -m  unittest discover tests
+  - coverage run tests/test_*
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

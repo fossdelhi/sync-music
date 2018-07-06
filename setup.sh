@@ -29,6 +29,6 @@ fi
 if [ ! -d ~/bin/ ]; then
     mkdir ~/bin/
 fi
-if [ ! -f ~/bin/sync-music ]; then 
+if [ ! -L ~/bin/sync-music ]; then 
     ln -s ./sync_music.py ~/bin/sync-music
 fi

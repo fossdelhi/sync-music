@@ -1,5 +1,6 @@
 # sync-music
 [![Build Status](https://travis-ci.org/fossdelhi/sync-music.svg?branch=master)](https://travis-ci.org/fossdelhi/sync-music)
+[![codecov](https://codecov.io/gh/fossdelhi/sync-music/branch/master/graph/badge.svg)](https://codecov.io/gh/fossdelhi/sync-music)
 
 A project, to ease backup, add metadata, and sync your music using cloud storage. :)
 

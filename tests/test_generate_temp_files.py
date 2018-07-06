@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import unittest
 import os
-from src import sync_music
+import sync_music
 
 
 class TestGenerateTempFiles(unittest.TestCase):
@@ -15,7 +15,8 @@ class TestGenerateTempFiles(unittest.TestCase):
     """
 
     def test_directory_found(self):
-        self.assertTrue(sync_music.find_new_songs((os.getcwd(),)) in (0, 3))
+        self.assertTrue(sync_music.find_new_songs((os.getcwd(),)) in
+                        (True, 3, ))
 
     def test_directory_not_exist(self):
         self.assertEqual(

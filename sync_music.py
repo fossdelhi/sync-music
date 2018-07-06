@@ -7,6 +7,7 @@ import dropbox
 import requests
 import attachmeta
 
+
 def find_new_songs(dirs):
     """
     This function calls bash script "generate_temp_files.sh" which
@@ -168,7 +169,7 @@ def upload_to_dropbox():
 
             song_name = (song.split('/'))[-1]
             try:
-                print(f"[*] {song_name}", end='\r') 
+                print(f"[*] {song_name}", end='\r')
                 with open(song, 'rb') as mp3file:
                     dbx.files_upload(bytes(mp3file.read()), '/'+song_name)
                 # main "Index" is getting updated with songs that are
@@ -213,7 +214,7 @@ def download_from_dropbox(download):
     print("\n\033[1;33mFollowing songs are available to download:\033[0m\n")
     with open(downloadable_songs, 'r') as file:
         for absolute_path in file:
-           print(f"{click.format_filename(absolute_path, shorten=True)}")
+            print(f"{click.format_filename(absolute_path, shorten=True)}")
 
     if ask_to_proceed("downloading") is False:
         return False
@@ -295,7 +296,7 @@ def main(dirs, config, download, meta):
             print("\nSongs downloaded successfully.")
     elif meta:
         print("Attaching Metadata only to the songs in file: "
-               f"{click.format_filename(meta, shorten=True)}")
+              f"{click.format_filename(meta, shorten=True)}")
         attachmeta.set_data(meta)
     else:
         exit(1)

@@ -1,6 +1,6 @@
 from unittest.mock import patch
 import unittest
-from tests import sample_data
+from src import sample_data
 from src import findmeta
 
 

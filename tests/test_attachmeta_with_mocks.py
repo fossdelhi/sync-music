@@ -1,7 +1,7 @@
 from unittest.mock import patch
 import unittest
-from src import findmeta, attachmeta
-from tests import sample_data
+import attachmeta
+from src import sample_data
 
 
 class testAttachmetaMethods(unittest.TestCase):

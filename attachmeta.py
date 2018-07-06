@@ -1,10 +1,12 @@
 import eyed3
 import requests
-import findmeta
+from src import findmeta
 
 
 # To avoid the lame tag CRC check warning
 eyed3.log.setLevel("ERROR")
+
+
 def split_by_first_occurence(string, character):
     """
     Split a function by first occurence of a character or a substring,
@@ -208,7 +210,7 @@ def set_data(song_name_file='index', DEBUG=False):
             if audio_file:
                 tick_mark = '\u2713'
                 print(f"[*] {song_data['name']}", end='\r')
-                
+
                 try:
                     audio_file.tag.artist = song_data["Artist(s)"]
                 except AttributeError:
@@ -239,7 +241,7 @@ def set_data(song_name_file='index', DEBUG=False):
                 audio_file.tag.save()
 
                 print(f"[\033[0;32m{tick_mark}\033[0m] {song_data['name']}")
-                
+
             else:
                 print("{}\n Couldn't be found".format(song_files[i]))
         else:

@@ -1,6 +1,6 @@
 import eyed3
 import requests
-from src import findmeta
+from . import findmeta
 
 
 # To avoid the lame tag CRC check warning

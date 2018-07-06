@@ -5,7 +5,7 @@ import os
 import json
 import dropbox
 import requests
-import attachmeta
+from src import attachmeta
 
 
 def find_new_songs(dirs):

@@ -3,7 +3,7 @@ language:
   - bash
 
 python:
-  - 3.6
+  - 3.5
 
 os:
   - linux

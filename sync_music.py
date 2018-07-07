@@ -169,7 +169,7 @@ def upload_to_dropbox():
 
             song_name = (song.split('/'))[-1]
             try:
-                print(f"[*] {song_name}", end='\r')
+                print("[*] {0}".format(song_name), end='\r')
                 with open(song, 'rb') as mp3file:
                     dbx.files_upload(bytes(mp3file.read()), '/'+song_name)
                 # main "Index" is getting updated with songs that are
@@ -178,7 +178,8 @@ def upload_to_dropbox():
                     index.write(song)
                     index.write('\n')
                 tick_mark = '\u2713'
-                print(f"[\033[0;32m{tick_mark}\033[0m] {song_name}")
+                print("[\033[0;32m{0}\033[0m] {1}".format(
+                      tick_mark, song_name))
             except dropbox.exceptions.AuthError as err:
                 print("**AuthError: ", err)
                 return False
@@ -214,7 +215,8 @@ def download_from_dropbox(download):
     print("\n\033[1;33mFollowing songs are available to download:\033[0m\n")
     with open(downloadable_songs, 'r') as file:
         for absolute_path in file:
-            print(f"{click.format_filename(absolute_path, shorten=True)}")
+            print("{0}".format(
+                  click.format_filename(absolute_path, shorten=True)))
 
     if ask_to_proceed("downloading") is False:
         return False
@@ -296,7 +298,7 @@ def main(dirs, config, download, meta):
             print("\nSongs downloaded successfully.")
     elif meta:
         print("Attaching Metadata only to the songs in file: "
-              f"{click.format_filename(meta, shorten=True)}")
+              "{0}".format(click.format_filename(meta, shorten=True)))
         attachmeta.set_data(meta)
     else:
         exit(1)

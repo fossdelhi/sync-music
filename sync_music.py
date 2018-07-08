@@ -6,6 +6,7 @@ import json
 import dropbox
 import requests
 from src import attachmeta
+from src import manage_dbx_conf
 
 
 def find_new_songs(dirs):
@@ -119,7 +120,7 @@ def get_dropbox_object():
     :returns: False, if dropbox object is not created successfully.
     """
 
-    app_token = get_user_config_from_file()
+    app_token = manage_dbx_conf.get_dbx_oauth2_token()
 
     if app_token is False:
         return False
@@ -287,9 +288,12 @@ def ask_to_proceed(reason=""):
 @click.option('--meta', '-m', type=click.Path(exists=True, resolve_path=True),
               help="To download metadata only, no upload\n")
 def main(dirs, config, download, meta):
-    if config and update_user_config_in_file(config):
-        print("Configured successfully.")
-    # gen_index(dirs) == 0, if songs are available to upload.
+    if config:
+        if manage_dbx_conf.check_dbx_env_var():
+            print("\nOverwriting previous token.")
+        if manage_dbx_conf.update_dbx_oauth2_token(config):
+            print("Configured successfully.")
+            print("\nNow please restart pipenv with: 1)exit 2)pipenv shell")
     elif dirs and find_new_songs(dirs):
         if upload_to_dropbox():
             print("\nSongs uploaded successfully.")

@@ -5,7 +5,6 @@ import os
 import requests
 import sync_music
 
-
 class TestDropboxAPI(unittest.TestCase):
 
     """
@@ -24,7 +23,8 @@ class TestDropboxAPI(unittest.TestCase):
         This test case checks the validity of API key.
         """
 
-        app_token = sync_music.get_user_config_from_file()
+        app_token = sync_music.manage_dbx_conf.get_dbx_oauth2_token()
+
         if not app_token:
             print("API token is not available in keys.json.")
             self.assertTrue(False)
@@ -55,7 +55,7 @@ class TestDropboxAPI(unittest.TestCase):
         Case: to upload a file to dropbox.
         """
 
-        app_token = sync_music.get_user_config_from_file()
+        app_token = sync_music.manage_dbx_conf.get_dbx_oauth2_token()
         dbx = dropbox.Dropbox(app_token)
         try:
             with open("testing_dropbox.tmp", 'rb') as f:
@@ -74,7 +74,7 @@ class TestDropboxAPI(unittest.TestCase):
         the same file that has been created in the above test.
         """
 
-        app_token = sync_music.get_user_config_from_file()
+        app_token = sync_music.manage_dbx_conf.get_dbx_oauth2_token()
         dbx = dropbox.Dropbox(app_token)
         try:
             dbx.files_download_to_file(
@@ -96,7 +96,7 @@ class TestDropboxAPI(unittest.TestCase):
         This test case deletes files that were created in above cases.
         """
 
-        app_token = sync_music.get_user_config_from_file()
+        app_token = sync_music.manage_dbx_conf.get_dbx_oauth2_token()
         dbx = dropbox.Dropbox(app_token)
         try:
             os.remove('testing_dropbox.tmp')

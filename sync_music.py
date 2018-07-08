@@ -2,7 +2,6 @@
 import click
 import subprocess
 import os
-import json
 import dropbox
 import requests
 from src import attachmeta

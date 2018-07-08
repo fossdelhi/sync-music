@@ -5,6 +5,7 @@ import os
 import requests
 import sync_music
 
+
 class TestDropboxAPI(unittest.TestCase):
 
     """

@@ -1,5 +1,6 @@
 import os
 
+
 def check_dbx_env_var():
     """
     This function checks for environment variable 'dropbox.key'.
@@ -7,9 +8,10 @@ def check_dbx_env_var():
     returns: True, if env variable 'dropbox.key' is available and is not empty.
     returns: False, if env variable 'dropbox.key' isn't available or is empty.
     """
-    if 'dropbox.key' not in os.environ.keys() or os.environ['dropbox.key'] == '':
-        print("\nPlease add Dropbox OAuth2 token. See sync-music --help")
-        return False
+    dbx = 'dropbox.key'
+    if dbx not in os.environ.keys() or os.environ[dbx] == '':
+            print("\nPlease add Dropbox OAuth2 token. See sync-music --help")
+            return False
 
     return True
 
@@ -27,11 +29,11 @@ def update_dbx_oauth2_token(config):
     returns: False, if .env symlink isn't found
     """
     if config[0] != 'dropbox.key':
-        print("\nCouldn't recognize \"%s\" option. See: sync-music --help" %
-              config[0])
+        print("\nCouldn't recognize {0} option."
+              " See: sync-music --help".format(config[0]))
         return False
 
-    env_file  = os.path.expanduser('~/.sync-music/config/.env')
+    env_file = os.path.expanduser('~/.sync-music/config/.env')
     try:
         with open(env_file, 'w') as f:
             f.write('dropbox.key='+config[1])

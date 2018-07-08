@@ -2,18 +2,23 @@ import unittest
 import os
 from src import manage_dbx_conf
 
+
 class TestDbxEnvVar(unittest.TestCase):
 
     dbx_token = ''
+    if 'dropbox.key' not in os.environ.keys():
+        os.environ['dropbox.key'] = ''
 
     def setUp(self):
         if manage_dbx_conf.get_dbx_oauth2_token() == os.environ['dropbox.key']:
             self.dbx_token = os.environ['dropbox.key']
-        else:
+        elif manage_dbx_conf.check_dbx_env_var():
             self.dbx_token = manage_dbx_conf.get_dbx_oauth2_token()
+        else:
+            self.dbx_token = ''
 
     def test_dotenv_file_found(self):
-        dotenv_symlink  = os.path.expanduser('~/.sync-music/config/.env')
+        dotenv_symlink = os.path.expanduser('~/.sync-music/config/.env')
         if os.path.isfile(dotenv_symlink) and os.path.isfile('.env'):
             self.assertTrue(True)
         else:
@@ -41,8 +46,7 @@ class TestDbxEnvVar(unittest.TestCase):
 
     def test_get_dbx_token_successfully(self):
         os.environ['dropbox.key'] = 'any value'
-        self.assertEqual(manage_dbx_conf.get_dbx_oauth2_token(),
-            'any value')
+        self.assertEqual(manage_dbx_conf.get_dbx_oauth2_token(), 'any value')
 
     def test_not_get_dbx_token_successfully(self):
         os.environ['dropbox.key'] = ''
@@ -60,7 +64,9 @@ class TestDbxEnvVar(unittest.TestCase):
 
     def tearDown(self):
         os.environ['dropbox.key'] = self.dbx_token
-        manage_dbx_conf.update_dbx_oauth2_token(('dropbox.key', self.dbx_token))
+        manage_dbx_conf.update_dbx_oauth2_token(
+            ('dropbox.key', self.dbx_token)
+        )
 
 
 if __name__ == '__main__':

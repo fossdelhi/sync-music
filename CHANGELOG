@@ -5,6 +5,10 @@ A file to keep a log of changes made in this project.
 --------------------
 #### [unreleased]
 ==========================
+*[2018-07-08]
+    * Added tests to check the handling of dropbox env variable
+    * Implemented .env to handle dropbox API
+
 * [2018-06-21]
     * Added the directory flexibility
 
@@ -48,7 +52,7 @@ A file to keep a log of changes made in this project.
 ==========================
 #####Added
 * [2018-04-16]
-    *Support for mock API 
+    *Support for mock API
 * [2018-04-10]
     *Daily dates to CHANGELOG
 * [2018-03-23]
@@ -64,7 +68,7 @@ A file to keep a log of changes made in this project.
 #####Fixed
 * [2018-04-10]
     *Project structure, attachmeta now belongs to project root.
-    
+
 --------------------
 #### [0.1.0] - 2018-03-20
 ==========================
@@ -80,4 +84,4 @@ A file to keep a log of changes made in this project.
 
 #####Removed
 * [2018-03-20]
-    *Printing functionality from metadata functions, they now return only data 
+    *Printing functionality from metadata functions, they now return only data

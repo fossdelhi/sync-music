@@ -91,7 +91,7 @@ Following files are created when you run ```setup.sh```. Their importance and us
 1. index.tmp: this file holds the paths of all mp3 files that are found in those directories that you pass as arguments i.e ```$ sync-music ~/dir1 ~/dir2```
 2. Index: this file stores the paths of all mp3 files that are uploaded on dropbox.
 3. added.tmp: this file holds the paths of all those mp3 files that are newly found in the directories that you pass as arguments. It doesn't include songs of ```Index``` only contains newly added songs.
-4. keys.json: this file stores your dropbox API token.
+4. .env: will be created once you'll run the setup. It is used to store API tokens/keys.
 
 The code of this app is available with [MIT LICENSE](https://github.com/fossdelhi/sync-music/blob/syncing/LICENSE).
 Suggestions for Improvement and Pull requests are appreciated.

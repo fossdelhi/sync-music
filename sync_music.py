@@ -2,10 +2,10 @@
 import click
 import subprocess
 import os
-import json
 import dropbox
 import requests
-import attachmeta
+from src import attachmeta
+from src import manage_dbx_conf
 
 
 def find_new_songs(dirs):
@@ -46,70 +46,6 @@ def find_new_songs(dirs):
         return res
 
 
-def update_user_config_in_file(config,
-                               config_file='~/.sync-music/config/keys.json'):
-    """
-    This function writes configuration in keys.json, for the field
-    whose "key" and "value" is given by user as arguments.
-
-    :param config: tuple consist of ("field of configuration", "value")
-    :param config_file: path to configuration file (keys.json).
-                        Default path is setup by executing "setup.sh"
-
-    :returns: False, if "field of configuration" is invalid.
-    :returns: True, if keys.json is found and configurations are
-              updated.
-    """
-
-    if config[0] != 'dropbox.key':
-        print("\nCouldn't recognize \"%s\" option. See: sync-music --help" %
-              config[0])
-        return False
-
-    else:
-        config_file = os.path.expanduser(config_file)
-        try:
-            if not os.path.isfile(config_file):
-                raise AttributeError
-            with open(config_file, mode='w') as f:
-                json.dump(dict({config}), f)
-        except AttributeError:
-            print("\nkeys.json is unavailable.")
-            return False
-        return True
-
-
-def get_user_config_from_file(config_file='~/.sync-music/config/keys.json'):
-    """
-    This function brings the configration from keys.json. And if
-    configurations are not present, then it also give a user friendly
-    message to first update their configurations and then try again.
-
-    :param config_file: path to configuration file. Default path is
-                        setup by executing "setup.sh".
-
-    :returns: False, if either keys.json is empty or not found.
-    :returns: API token, if configurations are successfully read from
-              the file.
-    """
-
-    config_file = os.path.expanduser(config_file)
-    try:
-        if os.path.isfile(config_file) is False:
-            raise AttributeError
-        with open(config_file, mode='r') as f:
-            keys = json.loads(f.read())
-            if os.stat(config_file).st_size != 0 and keys['dropbox.key'] != '':
-                return keys['dropbox.key']
-            else:
-                print("\nPlease config sync-music with dropbox API_token.\n"
-                      "See: sync-music --help")
-                return False
-    except AttributeError:
-        print("\nkeys.json is unavailable.")
-        return False
-
-
 def get_dropbox_object():
     """
     This function creates a dropbox object to make requests to
@@ -119,9 +55,10 @@ def get_dropbox_object():
     :returns: False, if dropbox object is not created successfully.
     """
 
-    app_token = get_user_config_from_file()
+    app_token = manage_dbx_conf.get_dbx_oauth2_token()
 
     if app_token is False:
+        print("\nPlease add Dropbox OAuth2 token. See sync-music --help")
         return False
 
     # Creating a Dropbox object
@@ -169,7 +106,7 @@ def upload_to_dropbox():
 
             song_name = (song.split('/'))[-1]
             try:
-                print(f"[*] {song_name}", end='\r')
+                print("[*] {0}".format(song_name), end='\r')
                 with open(song, 'rb') as mp3file:
                     dbx.files_upload(bytes(mp3file.read()), '/'+song_name)
                 # main "Index" is getting updated with songs that are
@@ -178,7 +115,8 @@ def upload_to_dropbox():
                     index.write(song)
                     index.write('\n')
                 tick_mark = '\u2713'
-                print(f"[\033[0;32m{tick_mark}\033[0m] {song_name}")
+                print("[\033[0;32m{0}\033[0m] {1}".format(
+                      tick_mark, song_name))
             except dropbox.exceptions.AuthError as err:
                 print("**AuthError: ", err)
                 return False
@@ -214,7 +152,8 @@ def download_from_dropbox(download):
     print("\n\033[1;33mFollowing songs are available to download:\033[0m\n")
     with open(downloadable_songs, 'r') as file:
         for absolute_path in file:
-            print(f"{click.format_filename(absolute_path, shorten=True)}")
+            print("{0}".format(
+                  click.format_filename(absolute_path, shorten=True)))
 
     if ask_to_proceed("downloading") is False:
         return False
@@ -285,9 +224,12 @@ def ask_to_proceed(reason=""):
 @click.option('--meta', '-m', type=click.Path(exists=True, resolve_path=True),
               help="To download metadata only, no upload\n")
 def main(dirs, config, download, meta):
-    if config and update_user_config_in_file(config):
-        print("Configured successfully.")
-    # gen_index(dirs) == 0, if songs are available to upload.
+    if config:
+        if manage_dbx_conf.check_dbx_env_var():
+            print("\nOverwriting previous token.")
+        if manage_dbx_conf.update_dbx_oauth2_token(config):
+            print("Configured successfully.")
+            print("\nNow please restart pipenv with: 1)exit 2)pipenv shell")
     elif dirs and find_new_songs(dirs):
         if upload_to_dropbox():
             print("\nSongs uploaded successfully.")
@@ -296,7 +238,7 @@ def main(dirs, config, download, meta):
             print("\nSongs downloaded successfully.")
     elif meta:
         print("Attaching Metadata only to the songs in file: "
-              f"{click.format_filename(meta, shorten=True)}")
+              "{0}".format(click.format_filename(meta, shorten=True)))
         attachmeta.set_data(meta)
     else:
         exit(1)

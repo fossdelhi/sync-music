@@ -1,6 +1,6 @@
 import eyed3
 import requests
-from src import findmeta
+from . import findmeta
 
 
 # To avoid the lame tag CRC check warning
@@ -209,7 +209,7 @@ def set_data(song_name_file='index', DEBUG=False):
             audio_file = eyed3.load(song_paths[i])
             if audio_file:
                 tick_mark = '\u2713'
-                print(f"[*] {song_data['name']}", end='\r')
+                print("[*] {0}".format(song_data['name']), end='\r')
 
                 try:
                     audio_file.tag.artist = song_data["Artist(s)"]
@@ -240,10 +240,11 @@ def set_data(song_name_file='index', DEBUG=False):
 
                 audio_file.tag.save()
 
-                print(f"[\033[0;32m{tick_mark}\033[0m] {song_data['name']}")
+                print("[\033[0;32m{0}\033[0m] {1}".format(
+                       tick_mark, song_data['name']))
 
             else:
-                print("{}\n Couldn't be found".format(song_files[i]))
+                print("{0}\n Couldn't be found".format(song_files[i]))
         else:
             print('Details of song found are: ')
             findmeta.print_dictionary(song_data)

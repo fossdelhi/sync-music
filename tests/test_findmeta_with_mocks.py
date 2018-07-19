@@ -7,7 +7,7 @@ from src import findmeta
 class testFindmetaMethods(unittest.TestCase):
 
     @classmethod
-    def setUp(cls):
+    def setUpClass(cls):
         cls.mock_lyrics_patcher = patch(
             'src.findmeta.lyricwikia.get_lyrics'
         )
@@ -16,7 +16,7 @@ class testFindmetaMethods(unittest.TestCase):
                                                 "lala la la la laaa")
 
     @classmethod
-    def tearDown(cls):
+    def tearDownClass(cls):
         cls.mock_lyrics_patcher.stop()
 
     @patch('src.findmeta.spotify.search')

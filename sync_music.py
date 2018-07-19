@@ -58,6 +58,7 @@ def get_dropbox_object():
     app_token = manage_dbx_conf.get_dbx_oauth2_token()
 
     if app_token is False:
+        print("\nPlease add Dropbox OAuth2 token. See sync-music --help")
         return False
 
     # Creating a Dropbox object

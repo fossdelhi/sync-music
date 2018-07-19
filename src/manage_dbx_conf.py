@@ -10,7 +10,6 @@ def check_dbx_env_var():
     """
     dbx = 'dropbox.key'
     if dbx not in os.environ.keys() or os.environ[dbx] == '':
-            print("\nPlease add Dropbox OAuth2 token. See sync-music --help")
             return False
 
     return True

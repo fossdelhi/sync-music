@@ -6,7 +6,7 @@ from src import sample_data
 
 class testAttachmetaMethods(unittest.TestCase):
     @classmethod
-    def setUp(cls):
+    def setUpClass(cls):
         cls.mock_search_results_patcher = patch(
             'src.attachmeta.findmeta.spotify.search'
         )
@@ -14,7 +14,7 @@ class testAttachmetaMethods(unittest.TestCase):
         cls.mock_search_results.return_value = sample_data.of_get_tracks
 
     @classmethod
-    def tearDown(cls):
+    def tearDownClass(cls):
         cls.mock_search_results_patcher.stop()
 
     def test_split_by_first_occurence(self):

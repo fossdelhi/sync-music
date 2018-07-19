@@ -11,7 +11,7 @@ os:
 install:
   - sudo apt-get install shellcheck
   - pip install flake8
-  - pip install pytest pytest-cov 
+  - pip install coverage
 
 before_script:
   - chmod +x setup.sh
@@ -20,7 +20,7 @@ before_script:
 script:
   - flake8 .
   - shellcheck ./src/*.sh
-  - pytest --cov=tests/test_*
+  - coverage run -m unittest discover tests/
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

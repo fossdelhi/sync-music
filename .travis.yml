@@ -12,6 +12,7 @@ install:
   - sudo apt-get install shellcheck
   - pip install flake8
   - pip install coverage
+
 before_script:
   - chmod +x setup.sh
   - . ./setup.sh

@@ -6,6 +6,19 @@ from src import findmeta
 
 class testFindmetaMethods(unittest.TestCase):
 
+    @classmethod
+    def setUp(cls):
+        cls.mock_lyrics_patcher = patch(
+            'src.findmeta.lyricwikia.get_lyrics'
+        )
+        cls.mock_lyrics_results = cls.mock_lyrics_patcher.start()
+        cls.mock_lyrics_results.return_value = ("lalalala la lala"
+                                                "lala la la la laaa")
+
+    @classmethod
+    def tearDown(cls):
+        cls.mock_lyrics_patcher.stop()
+
     @patch('src.findmeta.spotify.search')
     def test_get_tracks(self, mock_search_results):
         mock_search_results.return_value = sample_data.of_get_tracks
